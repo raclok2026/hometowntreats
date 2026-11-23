@@ -1,0 +1,3250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hometown Treats — Homemade Snacks &amp; Sweets</title>
+  <style>
+    :root {
+      --bg: #fffaf2;
+      --surface: #ffffff;
+      --ink: #2c1e16;
+      --muted: #6e5544;
+      --orange: #b83b14;
+      --orange-dark: #8a290d;
+      --green: #2c7a32;
+      --line: #eee3d5;
+      --accent-gold: #f7c96b;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(255, 250, 242, 0.88), rgba(255, 250, 242, 0.92)),
+        url("bg%20pic.png") center / cover fixed;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .intro-stage {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 24px 0 36px;
+      overflow: hidden;
+    }
+
+    .top-right-logo {
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      z-index: 20;
+      width: 76px;
+      height: 76px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid var(--accent-gold);
+      box-shadow: 0 6px 18px rgba(44, 30, 22, 0.16);
+      background: #fff;
+    }
+
+    .floating-kite {
+      position: fixed;
+      top: -40px;
+      z-index: 5;
+      font-size: 1.8rem;
+      pointer-events: none;
+      animation: kite-float 12s linear infinite;
+      opacity: 0.75;
+    }
+
+    body.menu-opened .floating-kite {
+      display: none;
+    }
+
+    .kite-1 { left: 8%; animation-duration: 13s; animation-delay: 0s; }
+    .kite-2 { left: 24%; animation-duration: 15s; animation-delay: -3s; }
+    .kite-3 { left: 45%; animation-duration: 11s; animation-delay: -6s; }
+    .kite-4 { left: 66%; animation-duration: 14s; animation-delay: -2s; }
+    .kite-5 { left: 82%; animation-duration: 16s; animation-delay: -8s; }
+    .kite-6 { left: 92%; animation-duration: 12.5s; animation-delay: -5s; }
+
+    @keyframes kite-float {
+      0% { transform: translateY(-40px) translateX(0) rotate(-10deg); }
+      50% { transform: translateY(50vh) translateX(24px) rotate(12deg); }
+      100% { transform: translateY(105vh) translateX(-18px) rotate(-8deg); }
+    }
+
+    .hero {
+      text-align: center;
+      padding: 16px 0 8px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .animated-heading {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.4rem, 7vw, 4.4rem);
+      color: var(--orange);
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: baseline;
+      gap: 0.12em;
+    }
+
+    .heading-left {
+      display: inline-block;
+      animation: slide-in-left 0.7s ease-out both;
+    }
+
+    .heading-right {
+      display: inline-flex;
+      align-items: baseline;
+      animation: slide-in-right 0.7s ease-out both;
+    }
+
+    @keyframes slide-in-left {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slide-in-right {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .flute-stem-t {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .t-vertical-line {
+      position: relative;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      vertical-align: baseline;
+      width: 0.44em;
+    }
+
+    .t-stem-bar {
+      display: block;
+      width: 0.115em;
+      height: 0.88em;
+      background: currentColor;
+      border-radius: 1px;
+    }
+
+    .flute-on-stem {
+      position: absolute;
+      left: 50%;
+      top: -0.24em;
+      width: 1.95em;
+      height: auto;
+      overflow: visible;
+      transform: translateX(-50%) translateY(-48px) rotate(-14deg);
+      opacity: 0;
+      animation: flute-land 0.85s cubic-bezier(0.22, 1.35, 0.36, 1) 0.35s forwards;
+      pointer-events: none;
+    }
+
+    .flute-stem-t.is-replaying .flute-on-stem {
+      animation: flute-land 0.75s cubic-bezier(0.22, 1.35, 0.36, 1) forwards;
+    }
+
+    @keyframes flute-land {
+      0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-48px) rotate(-14deg);
+      }
+      70% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(3px) rotate(3deg);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) rotate(0deg);
+      }
+    }
+
+    .tagline {
+      margin: 6px 0 0;
+      font-size: clamp(1rem, 2.6vw, 1.3rem);
+      font-weight: 700;
+      color: var(--muted);
+      animation: fade-up 0.8s ease 0.25s both;
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .snack-scene {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 20px;
+      margin: 14px auto 0;
+      padding: 18px 22px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: 0 12px 32px rgba(67, 43, 20, 0.08);
+      position: relative;
+      z-index: 10;
+    }
+
+    .character-stage {
+      position: relative;
+      padding-top: 54px;
+    }
+
+    .anime-family {
+      width: 100%;
+      max-width: 440px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .speech-bubble {
+      position: absolute;
+      top: 0;
+      width: 215px;
+      padding: 9px 13px;
+      border-radius: 16px;
+      background: #fffdf8;
+      border: 2px solid #e6c69c;
+      box-shadow: 0 6px 18px rgba(44, 30, 22, 0.1);
+      font-size: 0.88rem;
+      font-weight: 750;
+      color: var(--ink);
+      opacity: 0;
+      transform: translateY(6px) scale(0.95);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+    }
+
+    .speech-bubble.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .baby-bubble { left: 6px; }
+    .mom-bubble { right: 6px; background: #fff4ec; border-color: #f0b28a; }
+
+    .baby-runner {
+      animation: baby-run-to-mom 1.7s ease-out forwards;
+    }
+
+    @keyframes baby-run-to-mom {
+      0% { transform: translate(-170px, -12px) scale(0.78) rotate(-8deg); }
+      20% { transform: translate(-125px, -30px) scale(0.78) rotate(7deg); }
+      40% { transform: translate(-80px, -11px) scale(0.78) rotate(-7deg); }
+      60% { transform: translate(-38px, -30px) scale(0.78) rotate(6deg); }
+      80% { transform: translate(-4px, -11px) scale(0.78) rotate(-4deg); }
+      100% { transform: translate(29px, -12px) scale(0.78) rotate(0deg); }
+    }
+
+    .baby-happy-mouth { display: none; }
+    .baby-tears { animation: tear-fall 1.2s ease-in-out infinite; }
+    .baby-tears.delay { animation-delay: 0.4s; }
+
+    @keyframes tear-fall {
+      0%, 100% { opacity: 0.85; transform: translateY(0); }
+      50% { opacity: 0.35; transform: translateY(5px); }
+    }
+
+    .snack-scene.mom-replied .baby-cry-mouth,
+    .snack-scene.mom-replied .baby-tears {
+      display: none;
+    }
+
+    .snack-scene.mom-replied .baby-happy-mouth {
+      display: block;
+    }
+
+    .scene-copy {
+      text-align: left;
+    }
+
+    .welcome-note {
+      margin: 0 0 16px;
+      font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 46px;
+      padding: 11px 22px;
+      border-radius: 999px;
+      font: inherit;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .button-primary {
+      border: 0;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(184, 59, 20, 0.25);
+    }
+
+    .button-primary:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, #cf4418, #9c3010);
+    }
+
+    .button-bounce {
+      animation: subtle-bounce 1.8s ease-in-out infinite;
+    }
+
+    @keyframes subtle-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .sticky-menu-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding: 12px 16px;
+      background: rgba(255, 250, 242, 0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 4px 16px rgba(44, 30, 22, 0.06);
+    }
+
+    .sticky-header-inner {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+    }
+
+    .sticky-controls-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .top-search-bar {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border: 1.5px solid #decbb6;
+      border-radius: 999px;
+      padding: 4px 14px;
+    }
+
+    .top-search-bar input {
+      flex: 1;
+      border: 0;
+      outline: 0;
+      padding: 8px;
+      font: inherit;
+      font-size: 0.95rem;
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .clear-search-btn {
+      border: 0;
+      background: #f3e6d8;
+      color: var(--ink);
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .category-pills-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .category-pill {
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid #decbb6;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.88rem;
+      font-weight: 750;
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+
+    .category-pill.active {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+    }
+
+    .batch-status-wrap {
+      margin: 18px 0 8px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .batch-status-pill {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: #fff3dc;
+      border: 1.5px solid #f0c26b;
+      font-size: 0.9rem;
+      font-weight: 750;
+      color: #4f3108;
+    }
+
+    .batch-status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #2c7a32;
+    }
+
+    .preorder-accent {
+      color: var(--orange);
+      font-weight: 900;
+    }
+
+    .section-heading {
+      margin: 28px 0 4px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.45rem, 3.5vw, 2rem);
+      color: var(--orange);
+    }
+
+    .section-description {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .combos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .combo-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
+      border-radius: 18px;
+      background: var(--surface);
+      border: 1.5px solid var(--line);
+      box-shadow: 0 8px 24px rgba(44, 30, 22, 0.06);
+    }
+
+    .combo-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #fff2e2;
+      color: var(--orange);
+      font-size: 0.78rem;
+      font-weight: 850;
+    }
+
+    .combo-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin: 8px 0 10px;
+    }
+
+    .combo-title {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 850;
+      color: var(--ink);
+    }
+
+    .combo-mini-anim {
+      width: 68px;
+      height: 54px;
+      flex-shrink: 0;
+      overflow: visible;
+    }
+
+    .steam-wisp {
+      animation: steam-rise 2.2s ease-in-out infinite;
+    }
+    .steam-wisp-2 {
+      animation-delay: 0.9s;
+    }
+    @keyframes steam-rise {
+      0% { opacity: 0; transform: translateY(3px); }
+      50% { opacity: 0.9; transform: translateY(-3px); }
+      100% { opacity: 0; transform: translateY(-7px); }
+    }
+    .tea-stream-line {
+      stroke-dasharray: 4 3;
+      animation: tea-flow 0.65s linear infinite;
+    }
+    @keyframes tea-flow {
+      to { stroke-dashoffset: -14; }
+    }
+
+    .mini-kite-drift {
+      transform-origin: 36px 15px;
+      animation: kite-roam 3.2s ease-in-out infinite;
+    }
+    @keyframes kite-roam {
+      0% { transform: translate(0, 0) rotate(-14deg); }
+      25% { transform: translate(9px, -4px) rotate(14deg); }
+      50% { transform: translate(4px, 7px) rotate(-10deg); }
+      75% { transform: translate(-11px, 3px) rotate(16deg); }
+      100% { transform: translate(0, 0) rotate(-14deg); }
+    }
+
+    .mini-box-drop-shake {
+      transform-origin: 34px 34px;
+      animation: box-drop-and-shake 3.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+    }
+    @keyframes box-drop-and-shake {
+      0% { transform: translateY(-34px) rotate(-6deg); opacity: 0; }
+      16% { transform: translateY(2px) rotate(3deg); opacity: 1; }
+      24% { transform: translateY(0) rotate(-4deg); }
+      31% { transform: translateY(0) rotate(4deg); }
+      38% { transform: translateY(0) rotate(-2deg); }
+      45%, 88% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
+    }
+
+    .mini-box-lid {
+      transform-origin: 13px 22px;
+      animation: box-lid-pop-open 3.6s ease-in-out infinite;
+    }
+    @keyframes box-lid-pop-open {
+      0%, 44% { transform: translate(0, 0) rotate(0deg); }
+      56%, 85% { transform: translate(-4px, -7px) rotate(-38deg); }
+      100% { transform: translate(0, 0) rotate(0deg); }
+    }
+
+    .mini-treats-inside {
+      animation: treats-peek 3.6s ease-in-out infinite;
+    }
+    @keyframes treats-peek {
+      0%, 46% { opacity: 0; transform: translateY(4px); }
+      58%, 85% { opacity: 1; transform: translateY(-2px); }
+      100% { opacity: 0; transform: translateY(4px); }
+    }
+
+    .combo-items-list {
+      margin: 0 0 14px;
+      padding-left: 18px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .combo-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+    }
+
+    .combo-price-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .combo-old-price {
+      text-decoration: line-through;
+      color: #8f7969;
+      font-size: 0.9rem;
+    }
+
+    .combo-price {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--green);
+    }
+
+    .combo-add-btn {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 0;
+      background: var(--orange);
+      color: #fff;
+      font: inherit;
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .combo-add-btn:hover { background: var(--orange-dark); }
+
+    .no-search-results {
+      margin: 24px 0;
+      padding: 20px;
+      border-radius: 14px;
+      background: #fff;
+      border: 1px solid var(--line);
+      text-align: center;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .snack-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(235px, 1fr));
+      gap: 16px;
+    }
+
+    .snack-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--surface);
+      border: 1.5px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(44, 30, 22, 0.05);
+      transition: transform 0.16s ease, border-color 0.16s ease;
+    }
+
+    .snack-card:hover { transform: translateY(-2px); }
+    .snack-card.is-selected { border-color: var(--green); box-shadow: 0 0 0 2px rgba(44, 122, 50, 0.18); }
+
+    .snack-option {
+      display: block;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      text-align: left;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .snack-thumb {
+      width: 100%;
+      height: 175px;
+      object-fit: cover;
+      display: block;
+      background: #f7efe6;
+    }
+
+    .snack-details {
+      display: block;
+      padding: 12px 14px 8px;
+    }
+
+    .snack-name {
+      display: block;
+      font-size: 1.05rem;
+      font-weight: 850;
+      margin-bottom: 8px;
+    }
+
+    .snack-prices {
+      display: grid;
+      gap: 3px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .snack-prices > span {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .card-actions {
+      padding: 0 14px 14px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .pack-tap-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .pack-tap-btn {
+      min-height: 34px;
+      padding: 4px 6px;
+      border-radius: 8px;
+      border: 1px solid #e0cbb4;
+      background: #fff8ee;
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.78rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .pack-tap-btn:hover { background: #ffe8c7; }
+
+    .ingredients-btn {
+      min-height: 36px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      border: 1px solid #e6d7c5;
+      background: #faf5ef;
+      color: var(--muted);
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    .ingredients-btn:hover { background: #f2e8dc; color: var(--ink); }
+
+    .menu-order-cta {
+      margin: 34px 0 12px;
+      padding: 24px 18px;
+      border-radius: 20px;
+      background: #fff6e8;
+      border: 1.5px solid #efd5b1;
+      text-align: center;
+    }
+
+    .menu-order-cta h2 {
+      margin: 0 0 6px;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--orange);
+    }
+
+    .menu-order-cta p {
+      margin: 0 0 16px;
+      color: var(--muted);
+    }
+
+    .cta-buttons-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .button-whatsapp {
+      background: var(--green);
+      color: #fff;
+    }
+
+    .button-share {
+      background: #eef6ff;
+      color: #164e96;
+      border: 1.5px solid #9ec2f5;
+    }
+
+    .button-copy-link {
+      background: #fff;
+      color: var(--ink);
+      border: 1.5px solid #d6c3ae;
+    }
+
+    .order-form-section {
+      margin: 26px 0 36px;
+      padding: 24px 20px;
+      border-radius: 22px;
+      background: var(--surface);
+      border: 1.5px solid var(--line);
+      box-shadow: 0 10px 28px rgba(44, 30, 22, 0.06);
+    }
+
+    .order-form-section h2 {
+      margin: 0 0 6px;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--orange);
+    }
+
+    .form-intro {
+      margin: 0 0 18px;
+      color: var(--muted);
+    }
+
+    .order-items {
+      display: grid;
+      gap: 12px;
+    }
+
+    .empty-order {
+      margin: 0;
+      padding: 16px;
+      border-radius: 12px;
+      background: #faf5ef;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .order-item {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 0.7fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #fffcf7;
+      border: 1px solid var(--line);
+    }
+
+    .order-item-name {
+      font-weight: 800;
+    }
+
+    .combo-summary-subitems {
+      margin: 4px 0 4px;
+      padding-left: 16px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .combo-summary-price-line {
+      display: flex;
+      gap: 8px;
+      font-size: 0.86rem;
+    }
+
+    .summary-cut-price {
+      text-decoration: line-through;
+      color: #8f7969;
+    }
+
+    .summary-combo-price {
+      color: var(--green);
+      font-weight: 850;
+    }
+
+    .order-field {
+      display: grid;
+      gap: 5px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .order-fixed-pack {
+      padding: 8px 10px;
+      border-radius: 9px;
+      background: #f4ece2;
+      color: var(--ink);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .order-field input,
+    .order-field select {
+      width: 100%;
+      min-height: 42px;
+      padding: 8px 10px;
+      border: 1px solid #d9cbbb;
+      border-radius: 9px;
+      background: white;
+      color: var(--ink);
+      font: inherit;
+    }
+
+    .remove-item {
+      min-height: 42px;
+      padding: 8px 12px;
+      border: 1px solid #e5c4b8;
+      border-radius: 9px;
+      background: #fff2ed;
+      color: #913e2d;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .order-total {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #f1f7ed;
+      color: #385d35;
+      font-size: 1.05rem;
+      font-weight: 750;
+    }
+
+    .order-total-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .clear-order-btn {
+      padding: 6px 12px;
+      border: 1px solid #e0b4ad;
+      border-radius: 8px;
+      background: #fff0ee;
+      color: #a62b21;
+      font: inherit;
+      font-size: 0.85rem;
+      font-weight: 750;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .clear-order-btn:hover { background: #ffdcd7; }
+
+    .freebie-progress-box {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border: 1.5px solid #e8c474;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #fffdf4, #fff6da);
+      transition: border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .freebie-progress-box.unlocked {
+      border-color: #46a049;
+      background: linear-gradient(135deg, #f2fbf2, #e1f5e2);
+    }
+
+    .freebie-progress-text {
+      margin: 0 0 8px;
+      color: #6b3e08;
+      font-size: 0.93rem;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .freebie-progress-box.unlocked .freebie-progress-text { color: #1f5e22; }
+
+    .freebie-progress-track {
+      width: 100%;
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #f0e1c2;
+    }
+
+    .freebie-progress-box.unlocked .freebie-progress-track { background: #c8e6c9; }
+
+    .freebie-progress-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #e08e1b, #d45417);
+      transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1), background 0.25s ease;
+    }
+
+    .freebie-progress-box.unlocked .freebie-progress-fill {
+      background: linear-gradient(90deg, #2e7d32, #43a047);
+    }
+
+    .order-summary-note {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border: 2px solid #d93025;
+      border-radius: 12px;
+      background: #fff0ef;
+      color: #b42318;
+      font-size: 0.92rem;
+      font-weight: 800;
+      text-align: center;
+      animation: order-note-blink 1.1s ease-in-out infinite;
+    }
+
+    @keyframes order-note-blink {
+      0%, 100% { opacity: 1; background: #fff0ef; }
+      50% { opacity: 0.65; background: #ffd8d5; }
+    }
+
+    .pay-note {
+      width: min(100%, 660px);
+      margin: 16px auto 0;
+      padding: 12px 18px;
+      border: 2px solid #f7d536;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #fff9be, #ffeaa8);
+      color: #5d4300;
+      font-size: 0.96rem;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .customer-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .delivery-select-wrap { margin-top: 14px; }
+
+    .freebie-bottom-banner {
+      margin: 18px auto 0;
+      max-width: 580px;
+      padding: 12px 16px;
+      border: 2px solid #e6b84d;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #fff8dc, #ffebb3);
+      color: #6d3b08;
+      font-size: 0.96rem;
+      font-weight: 850;
+      text-align: center;
+      box-shadow: 0 5px 14px rgba(180, 120, 20, 0.14);
+    }
+
+    .submit-order {
+      display: flex;
+      width: min(100%, 300px);
+      margin: 14px auto 0;
+      background: var(--green);
+      color: white;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .submit-order:hover { background: #246528; }
+
+    .form-hint {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      text-align: center;
+    }
+
+    footer {
+      padding: 24px 0 92px;
+      border-top: 1px solid rgba(238, 227, 213, 0.9);
+      background: rgba(255, 250, 242, 0.97);
+      color: var(--muted);
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    .footer-title {
+      margin: 0 0 8px;
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+    }
+
+    .footer-contact {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px 20px;
+      margin: 0;
+    }
+
+    .footer-contact a {
+      color: #148342;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .footer-contact a:hover { text-decoration: underline; }
+
+    .copy-toast {
+      position: fixed;
+      bottom: 78px;
+      right: 20px;
+      z-index: 65;
+      padding: 10px 16px;
+      border: 1.5px solid #2d7a32;
+      border-radius: 999px;
+      background: #f2fbf2;
+      color: #1b5e20;
+      font-size: 0.88rem;
+      font-weight: 850;
+      box-shadow: 0 10px 24px rgba(27, 94, 32, 0.2);
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      pointer-events: none;
+    }
+
+    .copy-toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .scroll-top-btn {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      z-index: 46;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      border: 2px solid #f7c96b;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #b83b14, #8a290d);
+      color: #ffffff;
+      font-size: 1.3rem;
+      font-weight: 900;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(52, 39, 30, 0.28);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px);
+      transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease, background 0.18s ease;
+    }
+
+    .scroll-top-btn.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .scroll-top-btn:hover {
+      background: linear-gradient(135deg, #d64619, #a43210);
+      transform: translateY(-3px);
+    }
+
+    .floating-cart-pill {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      z-index: 45;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 24px;
+      border: 2px solid #f7c96b;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #34271e, #4e3829);
+      color: #ffffff;
+      font: inherit;
+      font-size: 0.98rem;
+      font-weight: 800;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 12px 30px rgba(34, 21, 12, 0.35);
+      transform: translate(-50%, 120px);
+      opacity: 0;
+      transition: transform 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+    }
+
+    .floating-cart-pill.show {
+      transform: translate(-50%, 0);
+      opacity: 1;
+    }
+
+    .floating-cart-pill:hover {
+      background: linear-gradient(135deg, #b83b14, #8a3815);
+      border-color: #ffe09e;
+    }
+
+    .baby-craving-popup {
+      position: fixed;
+      bottom: 78px;
+      left: 20px;
+      z-index: 55;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 18px;
+      border: 2px solid #9ac9e0;
+      border-radius: 999px;
+      background: rgba(255, 254, 249, 0.96);
+      box-shadow: 0 10px 30px rgba(67, 43, 20, 0.2);
+      backdrop-filter: blur(8px);
+      transform: translateY(120px) scale(0.8);
+      opacity: 0;
+      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.35s ease;
+      pointer-events: none;
+    }
+
+    .baby-craving-popup.show {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .baby-craving-avatar {
+      font-size: 2rem;
+      line-height: 1;
+      animation: baby-bounce 0.8s ease-in-out infinite alternate;
+    }
+
+    @keyframes baby-bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-4px); }
+    }
+
+    .baby-craving-text {
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .baby-craving-text span {
+      display: block;
+      color: var(--orange);
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .modal,
+    .celebration-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(31, 22, 17, 0.58);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+
+    .modal.show,
+    .celebration-modal.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-card {
+      width: min(560px, 96vw);
+      max-height: 90vh;
+      overflow: auto;
+      padding: 18px;
+      border-radius: 20px;
+      background: white;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.22);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      color: var(--orange);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+    }
+
+    .close-modal {
+      min-height: 40px;
+      padding: 8px 14px;
+      background: #7a5c48;
+      color: white;
+      border: 0;
+      border-radius: 999px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      display: grid;
+      grid-template-columns: minmax(130px, 180px) 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .modal-image {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 14px;
+      background: #f8f1ea;
+    }
+
+    .modal-detail-name {
+      margin: 0 0 8px;
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+
+    .modal-price {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: #fff3e3;
+      font-weight: 800;
+    }
+
+    .modal-selects {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 10px 0 14px;
+    }
+
+    .modal-selects label {
+      display: grid;
+      gap: 5px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 650;
+    }
+
+    .modal-selects select {
+      width: 100%;
+      min-height: 42px;
+      padding: 8px;
+      border: 1px solid #d9cbbb;
+      border-radius: 9px;
+      background: white;
+      color: var(--ink);
+      font: inherit;
+    }
+
+    .modal-ingredients {
+      margin: 0 0 10px;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .modal-storage-tip {
+      margin: 0 0 14px;
+      padding: 8px 12px;
+      border-left: 3px solid var(--orange);
+      border-radius: 8px;
+      background: #fff7eb;
+      color: #5a3c24;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .modal-add-btn:disabled {
+      background: #b6aa9f;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .celebration-card {
+      position: relative;
+      width: min(420px, 94vw);
+      padding: 34px 24px 26px;
+      overflow: hidden;
+      border: 2px solid #f1cd7b;
+      border-radius: 24px;
+      background: linear-gradient(145deg, #fffdf5, #fff0cf);
+      text-align: center;
+      box-shadow: 0 20px 65px rgba(0, 0, 0, 0.28);
+      transform: scale(0.82);
+      transition: transform 0.25s ease;
+    }
+
+    .celebration-modal.show .celebration-card { transform: scale(1); }
+
+    .celebration-icon {
+      margin: 0;
+      font-size: 3.2rem;
+      line-height: 1.2;
+      animation: celebration-bounce 0.7s ease-in-out infinite alternate;
+    }
+
+    @keyframes celebration-bounce {
+      from { transform: translateY(0) rotate(-8deg); }
+      to { transform: translateY(0) rotate(8deg); }
+    }
+
+    .celebration-card h2 {
+      margin: 8px 0 5px;
+      color: #8c4c13;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.7rem, 6vw, 2.2rem);
+    }
+
+    .celebration-card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+    }
+
+    .celebration-product {
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .celebration-confetti {
+      position: absolute;
+      top: -25px;
+      pointer-events: none;
+      animation: confetti-fall 1.8s ease-in forwards;
+    }
+
+    @keyframes confetti-fall {
+      to {
+        transform: translateY(460px) rotate(540deg);
+        opacity: 0;
+      }
+    }
+
+    .thank-you-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      overflow: auto;
+      padding: 24px 16px;
+      background:
+        linear-gradient(rgba(255, 250, 242, 0.76), rgba(255, 250, 242, 0.84)),
+        url("bg%20pic.png") center / cover fixed;
+    }
+
+    .thank-you-screen.show { display: flex; }
+
+    .thank-you-content {
+      width: min(700px, 100%);
+      margin: auto;
+      text-align: center;
+    }
+
+    .thank-you-message {
+      margin: 0 0 16px;
+      color: var(--orange);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.7rem, 5vw, 2.8rem);
+      font-weight: 900;
+    }
+
+    .thank-you-details {
+      padding: 16px 20px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.94);
+      color: #111111;
+      text-align: left;
+      box-shadow: 0 6px 20px rgba(67, 43, 20, 0.08);
+    }
+
+    .thank-you-highlight-greeting {
+      margin: 0 0 10px !important;
+      padding: 8px 12px;
+      border-left: 4px solid #b83b14;
+      border-radius: 8px;
+      background: #fff4e6;
+      color: #b83b14;
+      font-size: 1.04rem;
+      font-weight: 900;
+    }
+
+    .thank-you-details p { margin: 4px 0; }
+
+    .thank-you-details h2 {
+      margin: 10px 0 6px;
+      color: var(--orange);
+      font-size: 1.1rem;
+    }
+
+    .thank-you-order-list {
+      margin: 0;
+      padding-left: 22px;
+    }
+
+    .thank-you-total {
+      margin-top: 10px !important;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-weight: 800;
+    }
+
+    .copy-summary-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 14px;
+    }
+
+    .copy-summary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border: 2px solid var(--orange);
+      border-radius: 999px;
+      background: #fff7eb;
+      color: var(--orange);
+      font: inherit;
+      font-size: 0.92rem;
+      font-weight: 850;
+      cursor: pointer;
+      transition: background 0.16s ease, transform 0.15s ease;
+    }
+
+    .copy-summary-btn:hover {
+      background: #ffe7c7;
+      transform: translateY(-1px);
+    }
+
+    .thank-you-note {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border: 2px solid #7bb0ff;
+      border-radius: 12px;
+      background: #eaf3ff;
+      color: #0b57d0;
+      font-size: 0.92rem;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    @media (max-width: 700px) {
+      body { background-attachment: scroll; }
+      .intro-stage {
+        min-height: auto;
+        justify-content: flex-start;
+        gap: 6px;
+        padding: 12px 0 18px;
+        background-attachment: scroll;
+      }
+      .container { width: min(calc(100% - 24px), 560px); }
+
+      .intro-logo {
+        top: 8px;
+        right: 10px;
+        width: 56px;
+        height: 56px;
+      }
+
+      .hero { padding: 48px 0 2px; }
+
+      .sticky-menu-header { padding: 10px 12px; }
+
+      .category-pills-bar {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .category-pill {
+        flex-shrink: 0;
+        font-size: 0.82rem;
+        padding: 5px 12px;
+      }
+
+      .batch-status-pill {
+        border-radius: 16px;
+        font-size: 0.84rem;
+        text-align: center;
+      }
+
+      .snack-scene {
+        grid-template-columns: 1fr;
+        gap: 4px;
+        margin: 4px auto 0;
+        padding: 10px 12px;
+      }
+
+      .character-stage {
+        width: min(100%, 420px);
+        margin: 0 auto;
+        padding-top: 56px;
+      }
+
+      .anime-family { width: min(100%, 360px); }
+
+      @keyframes baby-run-to-mom {
+        0% { transform: translate(-155px, -12px) scale(0.78) rotate(-8deg); }
+        15% { transform: translate(-122px, -32px) scale(0.78) rotate(7deg); }
+        30% { transform: translate(-90px, -11px) scale(0.78) rotate(-7deg); }
+        45% { transform: translate(-58px, -32px) scale(0.78) rotate(6deg); }
+        60% { transform: translate(-26px, -11px) scale(0.78) rotate(-6deg); }
+        75% { transform: translate(4px, -30px) scale(0.78) rotate(5deg); }
+        90% { transform: translate(26px, -11px) scale(0.78) rotate(-2deg); }
+        100% { transform: translate(29px, -12px) scale(0.78) rotate(0deg); }
+      }
+
+      .speech-bubble {
+        width: min(205px, 54%);
+        min-height: 44px;
+        padding: 7px 10px;
+        font-size: 0.82rem;
+      }
+
+      .baby-bubble { left: 0; }
+      .mom-bubble { right: 0; }
+
+      .scene-copy { text-align: center; }
+
+      .welcome-note {
+        margin: 0 0 10px;
+        font-size: 1.08rem;
+      }
+
+      .snack-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .snack-thumb { height: 155px; }
+      .snack-details { padding: 11px 11px 8px; }
+      .card-actions { padding: 0 11px 11px; gap: 6px; }
+      .pack-tap-btn { font-size: 0.74rem; padding: 4px 4px; min-height: 32px; }
+      .ingredients-btn { font-size: 0.78rem; min-height: 34px; }
+      .snack-name { font-size: 1rem; }
+      .snack-prices { font-size: 0.84rem; }
+      .order-form-section { padding: 20px 14px; }
+
+      .order-item { grid-template-columns: 1fr 1fr; }
+      .order-item-name,
+      .remove-item { grid-column: 1 / -1; }
+
+      .customer-details { grid-template-columns: 1fr; }
+
+      .scroll-top-btn {
+        width: 42px;
+        height: 42px;
+        bottom: 18px;
+        right: 12px;
+        font-size: 1.15rem;
+      }
+
+      .floating-cart-pill {
+        width: calc(100% - 136px);
+        max-width: 300px;
+        font-size: 0.86rem;
+        padding: 11px 14px;
+        gap: 6px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .snack-list { grid-template-columns: 1fr; }
+      .snack-thumb { height: 200px; }
+      .button { width: 100%; }
+
+      .character-stage { padding-top: 62px; }
+      .speech-bubble {
+        width: 58%;
+        min-height: 48px;
+        font-size: 0.78rem;
+      }
+
+      .modal-body { grid-template-columns: 1fr; }
+      .modal-image { max-height: 220px; }
+      .modal-selects { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+
+      .baby-runner,
+      .baby-tears,
+      .floating-kite,
+      .heading-left,
+      .heading-right,
+      .celebration-icon,
+      .celebration-confetti,
+      .menu-order-cta h2,
+      .menu-order-cta p,
+      .menu-order-cta .button-whatsapp,
+      .button-bounce,
+      .order-summary-note,
+      .tagline,
+      .flute-on-stem,
+      .flute-stem-t.is-replaying .flute-on-stem,
+      .tea-stream-line,
+      .steam-wisp,
+      .mini-kite-drift,
+      .mini-box-drop-shake,
+      .mini-box-lid,
+      .mini-treats-inside {
+        animation: none !important;
+      }
+
+      .flute-on-stem {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) rotate(0deg);
+      }
+
+      .baby-runner { transform: translate(29px, -12px) scale(0.78); }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <section class="intro-stage" id="introStage">
+    <img class="top-right-logo intro-logo" src="logo.png" alt="Hometown Treats logo">
+
+    <div class="floating-kite kite-1" aria-hidden="true">🪁</div>
+    <div class="floating-kite kite-2" aria-hidden="true">🪁</div>
+    <div class="floating-kite kite-3" aria-hidden="true">🪁</div>
+    <div class="floating-kite kite-4" aria-hidden="true">🪁</div>
+    <div class="floating-kite kite-5" aria-hidden="true">🪁</div>
+    <div class="floating-kite kite-6" aria-hidden="true">🪁</div>
+
+    <div class="hero container">
+      <h1 class="animated-heading">
+        <span class="heading-left">Hometown</span>
+        <span class="heading-right"><span class="flute-stem-t" id="fluteLetterT" title="Hover or tap to replay flute landing"><span class="t-vertical-line" aria-hidden="true"><svg class="flute-on-stem" viewBox="0 0 180 42" role="img" aria-label="Yellow flute seated flush on top of the T stem with peacock feather hanging downwards">
+          <rect x="20" y="25" width="140" height="11" rx="5.5" fill="#ffd400" stroke="#b88200" stroke-width="1.2"/>
+          <rect x="36" y="24.5" width="6" height="12" rx="1.5" fill="#ff9900" stroke="#9e6500" stroke-width="0.9"/>
+          <rect x="138" y="24.5" width="6" height="12" rx="1.5" fill="#ff9900" stroke="#9e6500" stroke-width="0.9"/>
+          <circle cx="29" cy="30.5" r="1.9" fill="#7a4b00"/>
+          <circle cx="64" cy="30.5" r="1.9" fill="#7a4b00"/>
+          <circle cx="77" cy="30.5" r="1.9" fill="#7a4b00"/>
+          <circle cx="90" cy="30.5" r="1.9" fill="#7a4b00"/>
+          <circle cx="103" cy="30.5" r="1.9" fill="#7a4b00"/>
+          <circle cx="116" cy="30.5" r="1.9" fill="#7a4b00"/>
+          <path d="M142 36 Q138 45 144 54" fill="none" stroke="#d91b5c" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M146 36 Q151 45 148 54" fill="none" stroke="#1b7a5e" stroke-width="1.8" stroke-linecap="round"/>
+          <g transform="translate(154, 35) rotate(76)">
+            <path d="M0 7 Q16 -3 30 3 Q16 11 0 7 Z" fill="#1e846b" stroke="#115242" stroke-width="1.1"/>
+            <ellipse cx="19" cy="3.5" rx="5.5" ry="3.4" fill="#185a9d"/>
+            <ellipse cx="20.2" cy="3.5" rx="2.7" ry="1.8" fill="#ffd400"/>
+            <circle cx="21" cy="3.5" r="1.1" fill="#1c2833"/>
+          </g>
+        </svg><span class="t-stem-bar"></span></span>reats</span>
+      </h1>
+      <p class="tagline">✨ From our Home to yours! ✨</p>
+    </div>
+
+    <div class="snack-scene container" id="snackScene">
+      <div class="character-stage">
+        <div class="speech-bubble baby-bubble" id="babyBubble">
+          Mom, Feeling hungry I want snacks!!
+        </div>
+
+        <div class="speech-bubble mom-bubble" id="momBubble">
+          Sure, baby! Let’s check for homemade snacks!
+        </div>
+
+        <svg class="anime-family" viewBox="0 0 420 300" role="img" aria-label="A tall anime-style mother standing while her small baby runs from left toward her asking for snacks">
+          <g transform="translate(15, -10)">
+            <path d="M40 30 L55 50 L40 70 L25 50 Z" fill="#e76d76" stroke="#b42318" stroke-width="2"/>
+            <path d="M25 50 L55 50" stroke="#b42318" stroke-width="1.5"/>
+            <path d="M40 30 L40 70" stroke="#b42318" stroke-width="1.5"/>
+            <path d="M40 70 Q 30 90 45 110" fill="none" stroke="#e6c9a2" stroke-width="2"/>
+          </g>
+          <g transform="translate(340, 15) scale(0.8)">
+            <path d="M40 30 L55 50 L40 70 L25 50 Z" fill="#ffd46a" stroke="#d9921e" stroke-width="2"/>
+            <path d="M25 50 L55 50" stroke="#d9921e" stroke-width="1.5"/>
+            <path d="M40 30 L40 70" stroke="#d9921e" stroke-width="1.5"/>
+            <path d="M40 70 Q 50 95 35 120" fill="none" stroke="#e6c9a2" stroke-width="2"/>
+          </g>
+          <circle cx="25" cy="180" r="8" fill="#f59e0b"/>
+          <circle cx="25" cy="180" r="4" fill="#fbbf24"/>
+          <circle cx="395" cy="200" r="8" fill="#f59e0b"/>
+          <circle cx="395" cy="200" r="4" fill="#fbbf24"/>
+
+          <g transform="translate(-44 -30) scale(1.1)">
+            <path d="M236 300c6-63 26-99 73-99s68 36 74 99z" fill="#c56c65"/>
+            <path d="M241 117c-7-51 20-84 66-84 48 0 73 37 66 89l-8 66H251z" fill="#49352d"/>
+            <ellipse cx="306" cy="121" rx="53" ry="62" fill="#f3bd96"/>
+            <path d="M251 110c7-49 37-78 77-73 26 3 45 18 55 42-20-8-38-4-53 8 19-1 35 6 44 24-24-7-48-1-66 16-14-17-32-24-57-14z" fill="#49352d"/>
+            <path d="M274 119q13-10 27 0M315 119q13-10 27 0" fill="none" stroke="#49352d" stroke-width="4" stroke-linecap="round"/>
+            <ellipse cx="288" cy="124" rx="5" ry="8" fill="#49352d"/>
+            <ellipse cx="329" cy="124" rx="5" ry="8" fill="#49352d"/>
+            <circle cx="290" cy="121" r="2" fill="white"/>
+            <circle cx="331" cy="121" r="2" fill="white"/>
+            <path d="M297 150q11 11 23 0" fill="none" stroke="#ae625d" stroke-width="4" stroke-linecap="round"/>
+            <ellipse cx="273" cy="143" rx="9" ry="5" fill="#ee8d80" opacity=".55"/>
+            <ellipse cx="342" cy="143" rx="9" ry="5" fill="#ee8d80" opacity=".55"/>
+            <path d="M244 222q25-32 57-33M363 190q25 10 42 37" fill="none" stroke="#f3bd96" stroke-width="15" stroke-linecap="round"/>
+            <path d="M355 64q27-26 39-4-4 22-29 20M354 66q-28-23-37 0 4 21 29 18" fill="#e76d76" stroke="#bd4c5c" stroke-width="3"/>
+            <circle cx="354" cy="69" r="7" fill="#ffd46a"/>
+          </g>
+
+          <g class="baby-runner" id="babyRunner" transform="translate(29 -12) scale(.78)">
+            <path d="M58 300c6-59 24-91 68-91s63 32 69 91z" fill="#75a9cc"/>
+            <path d="M65 122c-7-50 20-86 67-86 49 0 76 37 68 91l-9 68H75z" fill="#30241f"/>
+            <ellipse cx="132" cy="128" rx="57" ry="68" fill="#f5c49c"/>
+            <path d="M75 110c8-45 38-73 77-70 25 2 44 14 57 37-19-7-37-4-53 9 19-1 35 6 46 20-24-5-45 1-63 17-13-16-33-23-60-15z" fill="#30241f"/>
+
+            <path d="M104 45q-18-28 4-33 17 10 14 29M139 42q4-30 27-22 8 15-6 28" fill="#30241f"/>
+            <path d="M88 122q17-15 35-3M143 119q17-13 34 3" fill="none" stroke="#432b25" stroke-width="5" stroke-linecap="round"/>
+            <ellipse cx="106" cy="142" rx="16" ry="22" fill="white"/>
+            <ellipse cx="158" cy="142" rx="16" ry="22" fill="white"/>
+            <ellipse cx="109" cy="149" rx="9" ry="14" fill="#5792c2"/>
+            <ellipse cx="155" cy="149" rx="9" ry="14" fill="#5792c2"/>
+            <circle cx="112" cy="143" r="4" fill="white"/>
+            <circle cx="158" cy="143" r="4" fill="white"/>
+
+            <path d="M129 157q-4 8 3 10" fill="none" stroke="#c98265" stroke-width="3" stroke-linecap="round"/>
+            <ellipse cx="79" cy="168" rx="12" ry="7" fill="#ee8d80" opacity=".65"/>
+            <ellipse cx="185" cy="168" rx="12" ry="7" fill="#ee8d80" opacity=".65"/>
+
+            <g class="baby-tears">
+              <path d="M84 153q-12 16 0 30 12-10 0-30z" fill="#59bfe9"/>
+              <circle cx="83" cy="160" r="3" fill="#d9f6ff"/>
+            </g>
+            <g class="baby-tears delay">
+              <path d="M181 153q-12 16 0 30 12-10 0-30z" fill="#59bfe9"/>
+              <circle cx="180" cy="160" r="3" fill="#d9f6ff"/>
+            </g>
+
+            <g class="baby-cry-mouth">
+              <path d="M117 185q15-18 31 0" fill="#8f3e43" stroke="#743333" stroke-width="3" stroke-linecap="round"/>
+              <path d="M122 184q10-6 20 0" fill="white"/>
+            </g>
+            <g class="baby-happy-mouth">
+              <path d="M112 180q20 25 41 0" fill="white" stroke="#a94c43" stroke-width="4" stroke-linecap="round"/>
+            </g>
+
+            <path d="M74 237q10-18 24-8M166 229q14-10 24 9" fill="none" stroke="#f5c49c" stroke-width="14" stroke-linecap="round"/>
+            <path d="M106 223q26 14 52 0" fill="none" stroke="#578cad" stroke-width="5" stroke-linecap="round"/>
+            <path d="M132 216l-7 12 9 8 8-8-7-12" fill="#fff2d6"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="scene-copy">
+        <p class="welcome-note">A little love, a lot of homemade goodness!!</p>
+        <button class="button button-primary button-bounce" id="viewItemsButton" type="button">View Items ↓</button>
+      </div>
+    </div>
+  </section>
+
+  <header class="sticky-menu-header" id="stickyMenuHeader" hidden>
+    <div class="sticky-header-inner">
+      <div class="sticky-controls-stack">
+        <div class="top-search-bar" role="search">
+          <span class="search-icon" aria-hidden="true">🔍</span>
+          <input
+            id="menuSearchInput"
+            type="search"
+            placeholder="Search snacks or ingredients..."
+            aria-label="Search snacks or ingredients"
+            autocomplete="off"
+          >
+          <button class="clear-search-btn" id="clearSearchBtn" type="button" aria-label="Clear search" hidden>✕</button>
+        </div>
+
+        <nav class="category-pills-bar" id="categoryPillsBar" aria-label="Menu categories">
+          <button class="category-pill" type="button" data-filter="combos">🎁 Combos</button>
+          <button class="category-pill active" type="button" data-filter="all">✨ All Treats</button>
+          <button class="category-pill" type="button" data-filter="Classic Favourites (Namkeen/Savory snacks.)">🌶️ Classic Favourites</button>
+          <button class="category-pill" type="button" data-filter="Healthy Treats">🥜 Healthy</button>
+          <button class="category-pill" type="button" data-filter="Sweet Treats">🍯 Sweets</button>
+          <button class="category-pill" type="button" data-filter="Sankranthi Special Treats">🪁 Sankranthi</button>
+          <button class="category-pill" type="button" data-filter="Premium Treats">👑 Premium</button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" id="pageContent" hidden>
+    <div class="batch-status-wrap" aria-label="Current batch dispatch and pre-order status">
+      <div class="batch-status-pill">
+        <span class="batch-status-dot" aria-hidden="true"></span>
+        <span><span class="preorder-accent">Pre-orders open till 30th Dec</span></span>
+        <span>• Dispatching Sunday Evening (First week of Jan)</span>
+        <span>• Order early before batch fills!</span>
+      </div>
+    </div>
+
+    <section class="combos-section" id="combosSection" aria-labelledby="combos-heading">
+      <h2 class="section-heading" id="combos-heading">🎁 Popular Combos &amp; Taster Boxes</h2>
+      <p class="section-description">Curated neighbour favourites — add a full combo in one tap!</p>
+      <div class="combos-grid" id="combosGrid"></div>
+    </section>
+
+    <div class="no-search-results" id="noSearchResults" hidden>
+      No snacks matched "<span id="noSearchTerm"></span>". Try searching for another treat or ingredient!
+    </div>
+
+    <div id="menuSections"></div>
+
+    <section class="menu-order-cta">
+      <h2>Ready to order your favourites?</h2>
+      <p>Message Hometown Treats on WhatsApp to place an order or share with neighbours.</p>
+      <div class="cta-buttons-group">
+        <a class="button button-whatsapp" href="https://wa.me/919100690536?text=Hi%20Hometown%20Treats%2C%20I%20would%20like%20to%20place%20an%20order." target="_blank" rel="noopener noreferrer">Order on WhatsApp</a>
+        <a class="button button-share" id="shareMenuCtaBtn" href="#" target="_blank" rel="noopener noreferrer">📲 Share Menu with Friends</a>
+        <button class="button button-copy-link" type="button" data-copy-link>📋 Copy Link</button>
+      </div>
+    </section>
+
+    <section class="order-form-section" id="order-form" aria-labelledby="order-heading">
+      <h2 id="order-heading">Order Your Treats</h2>
+      <p class="form-intro">Choose pack sizes and quantities. Your estimate updates automatically.</p>
+
+      <form id="snackOrderForm" novalidate>
+        <div class="order-items" id="orderItems" aria-live="polite">
+          <p class="empty-order">No snacks selected yet. Choose snacks from the menu above.</p>
+        </div>
+
+        <div class="order-total">
+          <span>Estimated total</span>
+          <div class="order-total-actions">
+            <button type="button" class="clear-order-btn" id="clearOrderBtn" hidden>Clear Order</button>
+            <span id="estimatedTotal">₹0</span>
+          </div>
+        </div>
+
+        <div class="freebie-progress-box" id="freebieProgressBox" aria-live="polite">
+          <p class="freebie-progress-text" id="freebieProgressText">
+            Add ₹1,001 more to unlock 100g Badusha FREE (for the first 3 WhatsApp orders)!
+          </p>
+          <div class="freebie-progress-track">
+            <div class="freebie-progress-fill" id="freebieProgressFill"></div>
+          </div>
+        </div>
+
+        <div class="order-summary-note">
+          Please note: your order is confirmed only if the message is successfully sent on WhatsApp to 9100690536.
+        </div>
+
+        <div class="pay-note">🚚 Pre-orders open till 30th Dec • Dispatching Sunday Evening (First week of Jan) • Order early before batch fills! — Free doorstep delivery within the community, or pickup from T5-2603 — pay only after receiving/collecting your order!!!</div>
+
+        <div class="customer-details">
+          <label class="order-field" for="customerName">
+            Name *
+            <input id="customerName" name="customerName" type="text" placeholder="Your name" required>
+          </label>
+          <label class="order-field" for="houseDetails">
+            House details *
+            <input id="houseDetails" name="houseDetails" type="text" placeholder="House / flat details" required>
+          </label>
+        </div>
+
+        <div class="delivery-select-wrap">
+          <label class="order-field" for="deliveryOptionSelect">
+            Delivery option *
+            <select id="deliveryOptionSelect" name="deliveryOption" required>
+              <option value="">Select delivery option</option>
+              <option value="Pickup from T5-2603">Pickup from T5-2603</option>
+              <option value="Home delivery">Home delivery</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="order-field" for="orderMessage" style="margin-top: 14px;">
+          Additional note (optional)
+          <input id="orderMessage" name="orderMessage" type="text" placeholder="Any other details?">
+        </label>
+
+        <div class="freebie-bottom-banner" id="freebieBottomBanner">
+          💛 A little extra sweetness from us: <strong>100g Badusha FREE</strong> for the first 3 WhatsApp orders above ₹1,000/-!
+        </div>
+
+        <button class="button submit-order" type="submit">Continue to WhatsApp</button>
+        <p class="form-hint">Review and send the order message in WhatsApp to complete your order.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer id="pageFooter" hidden>
+    <div class="container">
+      <p class="footer-title">Hometown Treats</p>
+      <p class="footer-contact">
+        <span>📞 <a href="tel:9100690536">9100690536</a></span>
+        <span>📍 Pickup / Delivery: T5-2603 (Free community doorstep delivery)</span>
+      </p>
+    </div>
+  </footer>
+
+  <div class="copy-toast" id="copyToast" role="status" aria-live="polite">📋 Menu link copied!</div>
+
+  <button type="button" class="scroll-top-btn" id="scrollTopBtn" aria-label="Go back to top of main page" title="Back to top">↑</button>
+
+  <a href="#order-form" class="floating-cart-pill" id="floatingCartPill" aria-label="View your order summary">
+    <span id="floatingCartText">🛒 0 items • ₹0</span>
+    <span>— View Order ↓</span>
+  </a>
+
+  <div class="baby-craving-popup" id="babyCravingPopup" aria-hidden="true">
+    <div class="baby-craving-avatar" aria-hidden="true">👶✨</div>
+    <div class="baby-craving-text">
+      <span>Yum! Great choice!</span>
+      <strong id="babyCravingItemName">Snack added</strong>
+    </div>
+  </div>
+
+  <div class="modal" id="itemModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <h3 id="modalTitle">Snack Details</h3>
+        <button class="close-modal" type="button" id="closeModalBtn">Close</button>
+      </div>
+      <div class="modal-body">
+        <img id="modalImage" class="modal-image" src="" alt="">
+        <div>
+          <p class="modal-detail-name" id="modalDetailName"></p>
+          <div class="modal-price" id="modalPrice">Choose a pack size</div>
+          <div class="modal-selects">
+            <label for="modalPackSelect">Pack size
+              <select id="modalPackSelect">
+                <option value="">Select size</option>
+                <option value="250">250g</option>
+                <option value="500">500g</option>
+                <option value="1000">1kg</option>
+              </select>
+            </label>
+            <label for="modalQtySelect">Quantity
+              <select id="modalQtySelect">
+                <option value="">Select quantity</option>
+                <option value="1">1</option><option value="2">2</option>
+                <option value="3">3</option><option value="4">4</option>
+                <option value="5">5</option><option value="6">6</option>
+                <option value="7">7</option><option value="8">8</option>
+                <option value="9">9</option><option value="10">10</option>
+              </select>
+            </label>
+          </div>
+          <ul class="modal-ingredients" id="modalIngredients"></ul>
+          <p class="modal-storage-tip">🫙 Best enjoyed within 3–4 weeks in an airtight container.</p>
+          <button class="button button-primary modal-add-btn" type="button" id="addToCartBtn" disabled>Add to order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="celebration-modal" id="celebrationModal" aria-hidden="true">
+    <div class="celebration-card" role="dialog" aria-modal="true" aria-labelledby="celebrationTitle">
+      <p class="celebration-icon" aria-hidden="true">🎉🥳🎊</p>
+      <h2 id="celebrationTitle">Added to your order!</h2>
+      <p><span class="celebration-product" id="celebrationProduct"></span> is in your order.</p>
+      <button class="button button-primary" id="continueShoppingBtn" type="button">Continue shopping</button>
+    </div>
+  </div>
+
+  <div class="thank-you-screen" id="thankYouScreen" aria-live="polite">
+    <div class="thank-you-content">
+      <p class="thank-you-message">Thanks for your interest. 🕺</p>
+      <div class="thank-you-details">
+        <p class="thank-you-highlight-greeting"><strong>Hello Hometown Treats, I would like to place an order</strong></p>
+        <p><strong>Name:</strong> <span id="thankYouName"></span></p>
+        <p><strong>House details:</strong> <span id="thankYouHouse"></span></p>
+        <p><strong>Delivery option:</strong> <span id="thankYouDeliveryMode"></span></p>
+        <h2>Order summary</h2>
+        <ul class="thank-you-order-list" id="thankYouOrderList"></ul>
+        <p class="thank-you-total"><strong>Estimated total:</strong> <span id="thankYouTotal"></span></p>
+        <div class="copy-summary-actions">
+          <button type="button" class="copy-summary-btn" id="copyOrderSummaryBtn">📋 Copy Order Summary</button>
+        </div>
+        <div class="thank-you-note">
+          <p>Your order is confirmed only after the message is successfully sent on WhatsApp to 9100690536.</p>
+          <p>If WhatsApp does not open, take a screenshot of your order and send it to 9100690536.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const whatsappNumber = "919100690536";
+    const CART_STORAGE_KEY = "hometownTreatsCartV1";
+    const CUSTOMER_STORAGE_KEY = "hometownTreatsCustomerV1";
+
+    const products = [
+      { id: "sanna-karapusa", section: "Classic Favourites (Namkeen/Savory snacks.)", name: "Sanna Karapusa / Small Sev", image: "sa ka.png", ingredients: "Rice flour, roasted gram flour, spices, sesame, ajwain, salt, and oil.", prices: { 250: 170, 500: 320, 1000: 600 } },
+      { id: "medium-karapusa", section: "Classic Favourites (Namkeen/Savory snacks.)", name: "medium karapusa/medium sev", image: "me ka.png", ingredients: "Rice flour, roasted gram flour, spices, ajwain, salt, and oil.", prices: { 250: 170, 500: 320, 1000: 600 } },
+      { id: "lavu-karapusa", section: "Classic Favourites (Namkeen/Savory snacks.)", name: "Lavu karapusa/Janthikalu", image: "la ka.png", ingredients: "Rice flour, besan, red chilli, sesame, ajwain, salt, and oil.", prices: { 250: 170, 500: 320, 1000: 600 } },
+      { id: "star-murukulu", section: "Classic Favourites (Namkeen/Savory snacks.)", name: "Star Murukulu/chakli", image: "chakli.png", ingredients: "Rice flour, gram flour, sesame, chilli, cumin, salt, and oil.", prices: { 250: 170, 500: 320, 1000: 600 } },
+      { id: "kara-mixture", section: "Classic Favourites (Namkeen/Savory snacks.)", name: "Kara mixture", image: "kara.png", ingredients: "Roasted peanuts, chana dal, sev, curry leaves, chilli, salt, and oil.", prices: { 250: 170, 500: 320, 1000: 600 } },
+      { id: "chekkalu", section: "Classic Favourites (Namkeen/Savory snacks.)", name: "Chekkalu/rice crackers", image: "chekkalu.png", ingredients: "Rice flour, sesame, cumin, chilli, curry leaves, salt, and oil.", prices: { 250: 170, 500: 320, 1000: 600 } },
+      { id: "aaku-pakodi", section: "Classic Favourites (Namkeen/Savory snacks.)", name: "Aaku pakodi/Ribbon pakodi", image: "ri pa.png", ingredients: "Besan, rice flour, curry leaves, chilli, sesame, salt, and oil.", prices: { 250: 170, 500: 320, 1000: 600 } },
+      { id: "chekodi", section: "Classic Favourites (Namkeen/Savory snacks.)", name: "Chekodi/chegodi", image: "chekodi.png", ingredients: "Rice flour, sesame seeds, cumin, chilli, salt, and oil.", prices: { 250: 170, 500: 320, 1000: 600 } },
+
+      { id: "peanut-chikki", section: "Healthy Treats", name: "Peanut Chikki (Palli Patti)", image: "peanut chi.png", ingredients: "Peanuts, jaggery, and a little ghee.", prices: { 250: 170, 500: 310, 1000: 600 } },
+      { id: "sesame-laddu", section: "Healthy Treats", name: "Sesame Laddu (Nuvvula Laddu)", image: "nuvvula laddu.png", ingredients: "Sesame seeds, jaggery, and cardamom.", prices: { 250: 220, 500: 420, 1000: 800 } },
+      { id: "sununda", section: "Healthy Treats", name: "Sununda (Ghee)", image: "sununda.png", ingredients: "Roasted urad dal flour, jaggery, ghee, and cardamom.", prices: { 250: 270, 500: 520, 1000: 1000 } },
+      { id: "dryfruit-laddu", section: "Healthy Treats", name: "Dryfruit Laddu", image: "dry.png", ingredients: "Mixed dry fruits, dates, nuts, and a touch of ghee.", prices: { 250: 340, 500: 650, 1000: 1200 } },
+      { id: "kaju-pakam", section: "Healthy Treats", name: "Kaju pakam (Kaju patti)", image: "kaju chi.png", ingredients: "Cashews, sugar, and ghee.", prices: { 250: 500, 500: 900, 1000: 1800 } },
+
+      { id: "ariselu", section: "Sweet Treats", name: "Ariselu", image: "ari.png", ingredients: "Rice flour, jaggery, sesame, ghee, and cardamom.", prices: { 250: 170, 500: 320, 1000: 600 } },
+      { id: "bellam-gavvalu", section: "Sweet Treats", name: "Bellam Gavvalu", image: "bellam gavvalu.png", ingredients: "Flour, jaggery, coconut, cardamom, and oil.", prices: { 250: 170, 500: 320, 1000: 600 } },
+      { id: "boondhi-mitai", section: "Sweet Treats", name: "Boondhi Mitai/Boondhi Achu", image: "boon mitai.png", ingredients: "Gram flour boondi, sugar syrup, nuts, cardamom, and oil.", prices: { 250: 170, 500: 320, 1000: 600 } },
+      { id: "sweet-boondhi-laddu", section: "Sweet Treats", name: "Boondhi Laddu", image: "la su.png", ingredients: "Gram flour, sugar syrup, nuts, cardamom, and oil.", prices: { 250: 170, 500: 320, 1000: 600 } },
+      { id: "badusha", section: "Sweet Treats", name: "Badusha", image: "badusha.png", ingredients: "All-purpose flour, sugar, ghee, curd, and oil.", prices: { 250: 170, 500: 320, 1000: 600 } },
+      { id: "madatha-kaja", section: "Sweet Treats", name: "Madatha Kaja", image: "kaja.png", ingredients: "All-purpose flour, sugar syrup, ghee, and oil.", prices: { 250: 170, 500: 320, 1000: 600 } },
+      { id: "mysore-pak", section: "Sweet Treats", name: "Mysore Pak (hard)", image: "hard mysore.png", ingredients: "Gram flour, sugar, ghee, and oil.", prices: { 250: 170, 500: 320, 1000: 600 } },
+      { id: "special-kajjikayalu", section: "Sweet Treats", name: "Kajjikayalu", image: "kajji.png", ingredients: "Flour pastry with a sweet filling, cardamom, and oil.", prices: { 250: 180, 500: 350, 1000: 680 } },
+
+      { id: "nuvvula-ariselu", section: "Sankranthi Special Treats", name: "Nuvvula Ariselu", image: "nu ari.png", ingredients: "Rice flour, sesame seeds, jaggery, oil, and cardamom.", prices: { 250: 185, 500: 360, 1000: 700 } },
+      { id: "nethi-mysore-pak", section: "Sankranthi Special Treats", name: "Nethi Mysore Pak (Ghee and Soft)", image: "soft mysore.png", ingredients: "Gram flour, pure ghee, and sugar.", prices: { 250: 190, 500: 360, 1000: 700 } },
+      { id: "sakinalu", section: "Sankranthi Special Treats", name: "Sakinalu", image: "sakinalu.png", ingredients: "Rice flour, sesame seeds, ajwain, salt, and oil.", prices: { 250: 185, 500: 360, 1000: 700 } },
+
+      { id: "palakova", section: "Premium Treats", name: "Palakova", image: "palakova.png", ingredients: "Milk, sugar, and cardamom.", prices: { 250: 220, 500: 430, 1000: 850 } },
+      { id: "kalakand", section: "Premium Treats", name: "Kalakand", image: "kalakand.png", ingredients: "Milk, sugar, and cardamom.", prices: { 250: 380, 500: 750, 1000: 1450 } },
+      { id: "kaju-barfi", section: "Premium Treats", name: "Kaju Barfi", image: "kaju barfi.png", ingredients: "Cashews, sugar, and cardamom.", prices: { 250: 380, 500: 750, 1000: 1450 } }
+    ];
+
+    const comboAnimations = {
+      "evening-chai-box": `
+        <svg class="combo-mini-anim" viewBox="0 0 68 54" aria-hidden="true">
+          <path class="steam-wisp" d="M46 25 Q43 20 47 15" fill="none" stroke="#0d9488" stroke-width="1.6" stroke-linecap="round"/>
+          <path class="steam-wisp steam-wisp-2" d="M51 24 Q54 19 50 14" fill="none" stroke="#f59e0b" stroke-width="1.6" stroke-linecap="round"/>
+          <g transform="translate(21, 14) rotate(28)">
+            <path d="M-10 -5 Q-17 -5 -17 1 Q-17 7 -10 7" fill="none" stroke="#7c2d12" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M8 -2 Q15 -3 19 3 L21 5 Q16 5 9 3 Z" fill="#c2410c" stroke="#7c2d12" stroke-width="1.1"/>
+            <ellipse cx="-1" cy="1" rx="10" ry="7.5" fill="#ea580c" stroke="#7c2d12" stroke-width="1.2"/>
+            <path d="M-6 -2 Q-2 -5 3 -3" fill="none" stroke="#fed7aa" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M-8 -5 Q-1 -10 6 -5 Z" fill="#9a3412" stroke="#7c2d12" stroke-width="1"/>
+            <circle cx="-1" cy="-9" r="1.8" fill="#fbbf24" stroke="#7c2d12" stroke-width="0.9"/>
+          </g>
+          <path class="tea-stream-line" d="M40 24 Q45 27 48 31" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M40 30 H56 L54 41 Q48 44 42 41 Z" fill="#ffffff" stroke="#0f766e" stroke-width="1.3"/>
+          <path d="M40.8 33.5 H55.2 L53.6 40.5 Q48 42.8 42.4 40.5 Z" fill="#f59e0b"/>
+          <path d="M56 32.5 Q60.5 32.5 60.5 36 Q60.5 39.5 56 39.5" fill="none" stroke="#0f766e" stroke-width="1.3"/>
+          <ellipse cx="48" cy="44.5" rx="12.5" ry="2.4" fill="#ccfbf1" stroke="#0f766e" stroke-width="1.2"/>
+        </svg>
+      `,
+      "sankranthi-festive-box": `
+        <svg class="combo-mini-anim" viewBox="0 0 68 54" aria-hidden="true">
+          <g transform="translate(33, 35)">
+            <circle cx="0" cy="0" r="12.5" fill="none" stroke="#4f46e5" stroke-width="1.3" stroke-dasharray="2.5 2"/>
+            <path d="M0 -10.5 Q6.5 0 0 10.5 Q-6.5 0 0 -10.5 Z" fill="#fdf2f8" stroke="#db2777" stroke-width="1.1"/>
+            <path d="M-10.5 0 Q0 6.5 10.5 0 Q0 -6.5 -10.5 0 Z" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.1"/>
+            <circle cx="0" cy="0" r="2.5" fill="#e11d48"/>
+          </g>
+          <g class="mini-kite-drift">
+            <path d="M36 5 L47 15 L36 25 L25 15 Z" fill="#0284c7" stroke="#0c4a6e" stroke-width="1.2"/>
+            <path d="M36 5 L47 15 L36 15 Z" fill="#ec4899" opacity="0.85"/>
+            <line x1="25" y1="15" x2="47" y2="15" stroke="#fef08a" stroke-width="1"/>
+            <line x1="36" y1="5" x2="36" y2="25" stroke="#fef08a" stroke-width="1"/>
+            <path d="M36 25 Q31 32 38 38" fill="none" stroke="#9333ea" stroke-width="1.2"/>
+          </g>
+        </svg>
+      `,
+      "healthy-family-pack": `
+        <svg class="combo-mini-anim" viewBox="0 0 68 54" aria-hidden="true">
+          <g class="mini-box-drop-shake">
+            <g class="mini-treats-inside">
+              <circle cx="24" cy="24" r="5" fill="#92400e" stroke="#451a03" stroke-width="1.1"/>
+              <circle cx="22.5" cy="22.5" r="1.2" fill="#fde047"/>
+              <circle cx="34" cy="23" r="5.4" fill="#a16207" stroke="#451a03" stroke-width="1.1"/>
+              <circle cx="32.5" cy="21.5" r="1.2" fill="#fef08a"/>
+              <circle cx="43" cy="24.5" r="4.8" fill="#b45309" stroke="#451a03" stroke-width="1.1"/>
+            </g>
+            <rect x="15" y="25" width="38" height="19" rx="3" fill="#fce7f3" stroke="#6b21a8" stroke-width="1.4"/>
+            <rect x="31.5" y="25" width="5" height="19" fill="#eab308"/>
+            <g class="mini-box-lid">
+              <rect x="13" y="19" width="42" height="7" rx="2.5" fill="#7e22ce" stroke="#4c1d95" stroke-width="1.3"/>
+              <rect x="31.5" y="19" width="5" height="7" fill="#facc15"/>
+            </g>
+          </g>
+        </svg>
+      `
+    };
+
+    const combos = [
+      {
+        id: "evening-chai-box",
+        badge: "☕ Best for Tea Time",
+        title: "Evening Chai Taster Box",
+        oldPrice: 1130,
+        price: 1099,
+        items: [
+          { productId: "sanna-karapusa", packSize: "250", quantity: 1, displayLabel: "Sanna Karapusa / Small Sev (250g)" },
+          { productId: "chekkalu", packSize: "500", quantity: 1, displayLabel: "Chekkalu/rice crackers (500g)" },
+          { productId: "sweet-boondhi-laddu", packSize: "500", quantity: 1, displayLabel: "Boondhi Laddu (500g)" },
+          { productId: "lavu-karapusa", packSize: "500", quantity: 1, displayLabel: "Lavu karapusa/Janthikalu (500g)" }
+        ]
+      },
+      {
+        id: "sankranthi-festive-box",
+        badge: "🪁 Festive Favourite",
+        title: "Sankranthi Celebration Pack",
+        oldPrice: 1420,
+        price: 1399,
+        items: [
+          { productId: "nuvvula-ariselu", packSize: "500", quantity: 1 },
+          { productId: "nethi-mysore-pak", packSize: "500", quantity: 1, displayLabel: "Nethi Mysore Pak (Ghee and Soft) (500g)" },
+          { productId: "sakinalu", packSize: "1000", quantity: 1, displayLabel: "Sakinalu (1 Kg)" }
+        ]
+      },
+      {
+        id: "healthy-family-pack",
+        badge: "🥜 Wholesome & Rich",
+        title: "Healthy Nut Box and Jaggery Items",
+        oldPrice: 1230,
+        price: 1199,
+        items: [
+          { productId: "peanut-chikki", packSize: "500", quantity: 1, displayLabel: "Peanut Chikki (Palli Patti) (500g)" },
+          { productId: "sesame-laddu", packSize: "250", quantity: 1 },
+          { productId: "dryfruit-laddu", packSize: "500", quantity: 1 }
+        ]
+      }
+    ];
+
+    const sections = [
+      { name: "Classic Favourites (Namkeen/Savory snacks.)", css: "section-classic", description: "Crispy, savoury favourites made fresh." },
+      { name: "Healthy Treats", css: "section-healthy", description: "Traditional treats with nuts, sesame, and jaggery." },
+      { name: "Sweet Treats", css: "section-sweet", description: "Homemade sweets for sharing and celebrating." },
+      { name: "Sankranthi Special Treats", css: "section-special", description: "Special homemade favourites for your Sankranthi celebrations." },
+      { name: "Premium Treats", css: "section-premium", description: "Rich, indulgent treats for special moments." }
+    ];
+
+    const menuSections = document.getElementById("menuSections");
+    const combosGrid = document.getElementById("combosGrid");
+    const combosSection = document.getElementById("combosSection");
+    const pageContent = document.getElementById("pageContent");
+    const pageFooter = document.getElementById("pageFooter");
+    const introStage = document.getElementById("introStage");
+    const snackScene = document.getElementById("snackScene");
+    const babyRunner = document.getElementById("babyRunner");
+    const babyBubble = document.getElementById("babyBubble");
+    const momBubble = document.getElementById("momBubble");
+    const fluteLetterT = document.getElementById("fluteLetterT");
+    const fluteSvg = fluteLetterT.querySelector(".flute-on-stem");
+    const selectedItems = new Map();
+
+    const stickyMenuHeader = document.getElementById("stickyMenuHeader");
+    const menuSearchInput = document.getElementById("menuSearchInput");
+    const clearSearchBtn = document.getElementById("clearSearchBtn");
+    const noSearchResults = document.getElementById("noSearchResults");
+    const noSearchTerm = document.getElementById("noSearchTerm");
+    const categoryPillsBar = document.getElementById("categoryPillsBar");
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+    const customerNameInput = document.getElementById("customerName");
+    const houseDetailsInput = document.getElementById("houseDetails");
+    const deliveryOptionSelect = document.getElementById("deliveryOptionSelect");
+    const orderMessageInput = document.getElementById("orderMessage");
+
+    const modal = document.getElementById("itemModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDetailName = document.getElementById("modalDetailName");
+    const modalImage = document.getElementById("modalImage");
+    const modalIngredients = document.getElementById("modalIngredients");
+    const modalPrice = document.getElementById("modalPrice");
+    const modalPackSelect = document.getElementById("modalPackSelect");
+    const modalQtySelect = document.getElementById("modalQtySelect");
+    const addToCartBtn = document.getElementById("addToCartBtn");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+
+    const celebrationModal = document.getElementById("celebrationModal");
+    const celebrationProduct = document.getElementById("celebrationProduct");
+    const continueShoppingBtn = document.getElementById("continueShoppingBtn");
+
+    const orderItems = document.getElementById("orderItems");
+    const estimatedTotal = document.getElementById("estimatedTotal");
+    const clearOrderBtn = document.getElementById("clearOrderBtn");
+    const freebieProgressBox = document.getElementById("freebieProgressBox");
+    const freebieProgressText = document.getElementById("freebieProgressText");
+    const freebieProgressFill = document.getElementById("freebieProgressFill");
+    const floatingCartPill = document.getElementById("floatingCartPill");
+    const floatingCartText = document.getElementById("floatingCartText");
+    const babyCravingPopup = document.getElementById("babyCravingPopup");
+    const babyCravingItemName = document.getElementById("babyCravingItemName");
+    const copyOrderSummaryBtn = document.getElementById("copyOrderSummaryBtn");
+    const copyToast = document.getElementById("copyToast");
+
+    let currentProduct = null;
+    let lastSelectedCard = null;
+    let cravingPopupTimer = null;
+    let copyToastTimer = null;
+    let initialLandingDone = false;
+    let replayCooldown = false;
+    let lastFormattedWhatsAppMessage = "";
+
+    fluteSvg.addEventListener("animationend", () => {
+      initialLandingDone = true;
+      fluteLetterT.classList.remove("is-replaying");
+      replayCooldown = false;
+    });
+
+    function replayFluteLanding() {
+      if (!initialLandingDone || replayCooldown) return;
+      replayCooldown = true;
+      fluteLetterT.classList.remove("is-replaying");
+      void fluteLetterT.offsetWidth;
+      fluteLetterT.classList.add("is-replaying");
+    }
+
+    fluteLetterT.addEventListener("mouseenter", replayFluteLanding);
+    fluteLetterT.addEventListener("click", replayFluteLanding);
+
+    function formatRupees(amount) {
+      return "₹" + Number(amount).toLocaleString("en-IN");
+    }
+
+    function getPackLabel(size) {
+      return size === "1000" ? "1kg" : `${size}g`;
+    }
+
+    function computeComboOriginalTotal(combo) {
+      let sum = 0;
+      combo.items.forEach((entry) => {
+        const prod = products.find((p) => p.id === entry.productId);
+        if (prod && prod.prices[entry.packSize]) {
+          sum += prod.prices[entry.packSize] * (entry.quantity || 1);
+        }
+      });
+      return sum > 0 ? sum : (combo.oldPrice || combo.price);
+    }
+
+    function saveCartToStorage() {
+      try {
+        const serialized = Array.from(selectedItems.entries()).map(([key, item]) => {
+          if (item.type === "combo") {
+            return [
+              key,
+              {
+                type: "combo",
+                comboId: item.comboId,
+                title: item.title,
+                subitems: item.subitems,
+                unitOriginalPrice: item.unitOriginalPrice,
+                unitDiscountedPrice: item.unitDiscountedPrice,
+                quantity: item.quantity
+              }
+            ];
+          }
+          return [
+            key,
+            {
+              type: "product",
+              productId: item.product.id,
+              packSize: item.packSize,
+              quantity: item.quantity
+            }
+          ];
+        });
+        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(serialized));
+      } catch {}
+    }
+
+    function saveCustomerToStorage() {
+      try {
+        localStorage.setItem(
+          CUSTOMER_STORAGE_KEY,
+          JSON.stringify({
+            customerName: customerNameInput.value,
+            houseDetails: houseDetailsInput.value,
+            deliveryOption: deliveryOptionSelect.value
+          })
+        );
+      } catch {}
+    }
+
+    function loadSavedState() {
+      try {
+        const rawCustomer = localStorage.getItem(CUSTOMER_STORAGE_KEY);
+        if (rawCustomer) {
+          const parsedCustomer = JSON.parse(rawCustomer);
+          if (parsedCustomer && typeof parsedCustomer === "object") {
+            if (typeof parsedCustomer.customerName === "string") customerNameInput.value = parsedCustomer.customerName;
+            if (typeof parsedCustomer.houseDetails === "string") houseDetailsInput.value = parsedCustomer.houseDetails;
+            if (typeof parsedCustomer.deliveryOption === "string") deliveryOptionSelect.value = parsedCustomer.deliveryOption;
+          }
+        }
+
+        const rawCart = localStorage.getItem(CART_STORAGE_KEY);
+        if (rawCart) {
+          const parsedCart = JSON.parse(rawCart);
+          if (Array.isArray(parsedCart)) {
+            parsedCart.forEach(([key, savedItem]) => {
+              if (!savedItem || typeof savedItem !== "object") return;
+              if (savedItem.type === "combo") {
+                const comboDef = combos.find((c) => c.id === savedItem.comboId);
+                const subitems = Array.isArray(savedItem.subitems)
+                  ? savedItem.subitems
+                  : (comboDef ? comboDef.items.map((entry) => {
+                      const prod = products.find((p) => p.id === entry.productId);
+                      return entry.displayLabel || (prod ? `${prod.name} (${getPackLabel(entry.packSize)})` : entry.productId);
+                    }) : []);
+                const unitOriginalPrice = typeof savedItem.unitOriginalPrice === "number"
+                  ? savedItem.unitOriginalPrice
+                  : (comboDef ? computeComboOriginalTotal(comboDef) : 0);
+                const unitDiscountedPrice = typeof savedItem.unitDiscountedPrice === "number"
+                  ? savedItem.unitDiscountedPrice
+                  : (comboDef ? comboDef.price : 0);
+
+                selectedItems.set(key, {
+                  type: "combo",
+                  comboId: savedItem.comboId || key,
+                  title: savedItem.title || (comboDef ? comboDef.title : "Combo Pack"),
+                  subitems,
+                  unitOriginalPrice,
+                  unitDiscountedPrice,
+                  quantity: Math.max(1, Number.parseInt(savedItem.quantity, 10) || 1)
+                });
+              } else {
+                const prod = products.find((p) => p.id === savedItem.productId);
+                if (prod && prod.prices[savedItem.packSize]) {
+                  selectedItems.set(key, {
+                    type: "product",
+                    product: prod,
+                    packSize: savedItem.packSize,
+                    quantity: Math.max(1, Number.parseInt(savedItem.quantity, 10) || 1)
+                  });
+                  const card = document.querySelector(`[data-product-id="${CSS.escape(prod.id)}"]`);
+                  if (card) card.classList.add("is-selected");
+                }
+              }
+            });
+          }
+        }
+      } catch {}
+    }
+
+    function addProductToCart(product, packSize, quantity, cardElement) {
+      const id = product.id;
+      const existing = selectedItems.get(id);
+
+      if (existing && existing.type === "product" && existing.packSize === packSize) {
+        existing.quantity += quantity;
+      } else {
+        selectedItems.set(id, {
+          type: "product",
+          product,
+          packSize,
+          quantity
+        });
+      }
+
+      const targetCard = cardElement || document.querySelector(`[data-product-id="${CSS.escape(id)}"]`);
+      if (targetCard) targetCard.classList.add("is-selected");
+
+      saveCartToStorage();
+      renderOrderItems();
+    }
+
+    function addComboToCart(combo) {
+      const key = `combo:${combo.id}`;
+      const originalTotal = computeComboOriginalTotal(combo);
+      const subitems = combo.items.map((entry) => {
+        const product = products.find((p) => p.id === entry.productId);
+        return entry.displayLabel || (product ? `${product.name} (${getPackLabel(entry.packSize)})` : entry.productId);
+      });
+
+      const existing = selectedItems.get(key);
+      if (existing && existing.type === "combo") {
+        existing.quantity += 1;
+      } else {
+        selectedItems.set(key, {
+          type: "combo",
+          comboId: combo.id,
+          title: combo.title,
+          subitems,
+          unitOriginalPrice: originalTotal,
+          unitDiscountedPrice: combo.price,
+          quantity: 1
+        });
+      }
+
+      saveCartToStorage();
+      renderOrderItems();
+    }
+
+    function getItemLineTotals(item) {
+      if (item.type === "combo") {
+        return {
+          originalLineTotal: item.unitOriginalPrice * item.quantity,
+          discountedLineTotal: item.unitDiscountedPrice * item.quantity
+        };
+      }
+      const lineTotal = item.product.prices[item.packSize] * item.quantity;
+      return {
+        originalLineTotal: lineTotal,
+        discountedLineTotal: lineTotal
+      };
+    }
+
+    function getTotalItemCount() {
+      let count = 0;
+      selectedItems.forEach((item) => {
+        count += item.quantity;
+      });
+      return count;
+    }
+
+    function renderCombos() {
+      combos.forEach((combo) => {
+        const card = document.createElement("div");
+        card.className = "combo-card";
+
+        const topWrap = document.createElement("div");
+
+        const badge = document.createElement("span");
+        badge.className = "combo-badge";
+        badge.textContent = combo.badge;
+
+        const titleRow = document.createElement("div");
+        titleRow.className = "combo-title-row";
+
+        const title = document.createElement("h3");
+        title.className = "combo-title";
+        title.textContent = combo.title;
+
+        titleRow.appendChild(title);
+        if (comboAnimations[combo.id]) {
+          titleRow.insertAdjacentHTML("beforeend", comboAnimations[combo.id]);
+        }
+
+        const ul = document.createElement("ul");
+        ul.className = "combo-items-list";
+
+        combo.items.forEach((entry) => {
+          const product = products.find((p) => p.id === entry.productId);
+          if (!product) return;
+
+          const li = document.createElement("li");
+          li.textContent = entry.displayLabel || `${product.name} (${getPackLabel(entry.packSize)})`;
+          ul.appendChild(li);
+        });
+
+        topWrap.append(badge, titleRow, ul);
+
+        const footer = document.createElement("div");
+        footer.className = "combo-footer";
+
+        const priceWrap = document.createElement("div");
+        priceWrap.className = "combo-price-wrap";
+
+        if (combo.oldPrice) {
+          const oldPrice = document.createElement("span");
+          oldPrice.className = "combo-old-price";
+          oldPrice.textContent = `${formatRupees(combo.oldPrice)}/-`;
+          priceWrap.appendChild(oldPrice);
+        }
+
+        const price = document.createElement("span");
+        price.className = "combo-price";
+        price.textContent = `${formatRupees(combo.price)}/-`;
+        priceWrap.appendChild(price);
+
+        const addBtn = document.createElement("button");
+        addBtn.type = "button";
+        addBtn.className = "combo-add-btn";
+        addBtn.textContent = "+ Add Combo";
+        addBtn.addEventListener("click", () => {
+          addComboToCart(combo);
+          showBabyCravingPopup(combo.title);
+          const original = addBtn.textContent;
+          addBtn.textContent = "✓ Combo Added!";
+          setTimeout(() => { addBtn.textContent = original; }, 1200);
+        });
+
+        footer.append(priceWrap, addBtn);
+        card.append(topWrap, footer);
+        combosGrid.appendChild(card);
+      });
+    }
+
+    function renderMenu() {
+      sections.forEach((sectionInfo) => {
+        const section = document.createElement("section");
+        section.className = `menu-section ${sectionInfo.css}`;
+        section.dataset.sectionName = sectionInfo.name;
+
+        const heading = document.createElement("h2");
+        heading.className = "section-heading";
+        heading.textContent = sectionInfo.name;
+
+        const description = document.createElement("p");
+        description.className = "section-description";
+        description.textContent = sectionInfo.description;
+
+        const list = document.createElement("ul");
+        list.className = "snack-list";
+
+        products
+          .filter((product) => product.section === sectionInfo.name)
+          .forEach((product) => {
+            const li = document.createElement("li");
+            li.dataset.searchText = `${product.name} ${product.section} ${product.ingredients}`.toLowerCase();
+            li.dataset.sectionName = product.section;
+
+            const card = document.createElement("div");
+            card.className = "snack-card";
+            card.dataset.productId = product.id;
+
+            const button = document.createElement("button");
+            button.className = "snack-option";
+            button.type = "button";
+            button.setAttribute("aria-label", `${product.name}; view ingredients and add more`);
+
+            const image = document.createElement("img");
+            image.className = "snack-thumb";
+            image.src = product.image;
+            image.alt = product.name;
+            image.loading = "lazy";
+            image.onerror = () => { image.style.visibility = "hidden"; };
+
+            const details = document.createElement("span");
+            details.className = "snack-details";
+
+            const name = document.createElement("span");
+            name.className = "snack-name";
+            name.textContent = product.name;
+
+            const priceList = document.createElement("span");
+            priceList.className = "snack-prices";
+
+            [["250", "250g"], ["500", "500g"], ["1000", "1kg"]].forEach(([size, label]) => {
+              const row = document.createElement("span");
+              const pack = document.createElement("span");
+              const price = document.createElement("strong");
+              pack.textContent = label;
+              price.textContent = `${formatRupees(product.prices[size])}/-`;
+              row.append(pack, price);
+              priceList.appendChild(row);
+            });
+
+            details.append(name, priceList);
+            button.append(image, details);
+            button.addEventListener("click", () => openModal(product, card));
+
+            const actions = document.createElement("div");
+            actions.className = "card-actions";
+
+            const packTapRow = document.createElement("div");
+            packTapRow.className = "pack-tap-row";
+
+            [["250", "250g"], ["500", "500g"], ["1000", "1kg"]].forEach(([size, label]) => {
+              const packBtn = document.createElement("button");
+              packBtn.type = "button";
+              packBtn.className = "pack-tap-btn";
+              packBtn.textContent = `+ ${label}`;
+              packBtn.setAttribute("aria-label", `Add ${label} of ${product.name} for ${formatRupees(product.prices[size])}`);
+              packBtn.addEventListener("click", (event) => {
+                event.stopPropagation();
+                addProductToCart(product, size, 1, card);
+                showBabyCravingPopup(`${product.name} (${label})`);
+                const originalText = packBtn.textContent;
+                packBtn.textContent = `✓ ${label}`;
+                setTimeout(() => { packBtn.textContent = originalText; }, 1000);
+              });
+              packTapRow.appendChild(packBtn);
+            });
+
+            const ingredientsBtn = document.createElement("button");
+            ingredientsBtn.type = "button";
+            ingredientsBtn.className = "ingredients-btn";
+            ingredientsBtn.textContent = "🌿 view ingredients and add more";
+            ingredientsBtn.addEventListener("click", (event) => {
+              event.stopPropagation();
+              openModal(product, card);
+            });
+
+            actions.append(packTapRow, ingredientsBtn);
+            card.append(button, actions);
+            li.appendChild(card);
+            list.appendChild(li);
+          });
+
+        section.append(heading, description, list);
+        menuSections.appendChild(section);
+      });
+    }
+
+    function filterMenu(rawQuery, selectedCategory = "all") {
+      const query = rawQuery.trim().toLowerCase();
+      clearSearchBtn.hidden = query.length === 0;
+
+      if (selectedCategory === "combos") {
+        combosSection.hidden = false;
+        menuSections.querySelectorAll(".menu-section").forEach((s) => { s.hidden = true; });
+        noSearchResults.hidden = true;
+        return;
+      }
+
+      combosSection.hidden = query.length > 0 || selectedCategory !== "all";
+
+      let totalMatches = 0;
+
+      menuSections.querySelectorAll(".menu-section").forEach((section) => {
+        const matchesCategory = selectedCategory === "all" || section.dataset.sectionName === selectedCategory;
+        let sectionMatches = 0;
+
+        section.querySelectorAll(".snack-list li").forEach((item) => {
+          const matchesQuery = !query || item.dataset.searchText.includes(query);
+          const isMatch = matchesCategory && matchesQuery;
+          item.hidden = !isMatch;
+          if (isMatch) {
+            sectionMatches++;
+            totalMatches++;
+          }
+        });
+        section.hidden = sectionMatches === 0;
+      });
+
+      if ((query || selectedCategory !== "all") && totalMatches === 0) {
+        noSearchTerm.textContent = query || selectedCategory;
+        noSearchResults.hidden = false;
+      } else {
+        noSearchResults.hidden = true;
+      }
+    }
+
+    categoryPillsBar.addEventListener("click", (event) => {
+      const pill = event.target.closest(".category-pill");
+      if (!pill) return;
+
+      categoryPillsBar.querySelectorAll(".category-pill").forEach((p) => p.classList.remove("active"));
+      pill.classList.add("active");
+
+      const category = pill.dataset.filter;
+      filterMenu(menuSearchInput.value, category);
+
+      if (category === "combos") {
+        combosSection.scrollIntoView({
+          behavior: prefersReducedMotion ? "auto" : "smooth",
+          block: "start"
+        });
+      }
+    });
+
+    function openModal(product, card) {
+      currentProduct = product;
+      lastSelectedCard = card;
+      modalTitle.textContent = product.name;
+      modalDetailName.textContent = product.name;
+      modalImage.src = product.image;
+      modalImage.alt = product.name;
+      modalImage.style.visibility = "visible";
+      modalIngredients.innerHTML = "";
+
+      product.ingredients.split(",").forEach((ingredient) => {
+        const li = document.createElement("li");
+        li.textContent = ingredient.trim();
+        modalIngredients.appendChild(li);
+      });
+
+      modalPackSelect.value = "";
+      modalQtySelect.value = "";
+      modalPrice.textContent = "Choose a pack size";
+      addToCartBtn.disabled = true;
+
+      modal.classList.add("show");
+      modal.setAttribute("aria-hidden", "false");
+      closeModalBtn.focus();
+    }
+
+    function closeModal() {
+      modal.classList.remove("show");
+      modal.setAttribute("aria-hidden", "true");
+      currentProduct = null;
+    }
+
+    function updateModalPrice() {
+      if (!currentProduct || !modalPackSelect.value) {
+        modalPrice.textContent = "Choose a pack size";
+      } else {
+        const amount = currentProduct.prices[modalPackSelect.value];
+        modalPrice.textContent = `${formatRupees(amount)}/- per ${getPackLabel(modalPackSelect.value)}`;
+      }
+      addToCartBtn.disabled = !(modalPackSelect.value && modalQtySelect.value);
+    }
+
+    function updateFreebieProgress(total) {
+      const target = 1001;
+      const percent = Math.min(100, Math.round((total / target) * 100));
+      freebieProgressFill.style.width = `${percent}%`;
+
+      if (total > 1000) {
+        freebieProgressBox.classList.add("unlocked");
+        freebieProgressText.textContent =
+          "🎉 Your order qualifies for 100g Badusha FREE (subject to first 3 WhatsApp orders)!";
+      } else {
+        freebieProgressBox.classList.remove("unlocked");
+        const remaining = target - total;
+        freebieProgressText.textContent =
+          `Add ${formatRupees(remaining)} more to unlock 100g Badusha FREE (for the first 3 WhatsApp orders)!`;
+      }
+    }
+
+    function updateTotal() {
+      let total = 0;
+      selectedItems.forEach((item) => {
+        total += getItemLineTotals(item).discountedLineTotal;
+      });
+      const totalCount = getTotalItemCount();
+      estimatedTotal.textContent = formatRupees(total);
+      clearOrderBtn.hidden = selectedItems.size === 0;
+      updateFreebieProgress(total);
+
+      if (totalCount > 0) {
+        const itemWord = totalCount === 1 ? "item" : "items";
+        floatingCartText.textContent = `🛒 ${totalCount} ${itemWord} • ${formatRupees(total)}`;
+        floatingCartPill.classList.add("show");
+      } else {
+        floatingCartPill.classList.remove("show");
+      }
+    }
+
+    function renderOrderItems() {
+      orderItems.innerHTML = "";
+
+      if (selectedItems.size === 0) {
+        const empty = document.createElement("p");
+        empty.className = "empty-order";
+        empty.textContent = "No snacks selected yet. Choose snacks from the menu above.";
+        orderItems.appendChild(empty);
+        updateTotal();
+        return;
+      }
+
+      selectedItems.forEach((item, id) => {
+        const row = document.createElement("div");
+        row.className = "order-item";
+
+        const name = document.createElement("div");
+        name.className = "order-item-name";
+
+        if (item.type === "combo") {
+          const titleSpan = document.createElement("div");
+          titleSpan.textContent = `${item.title} (Combo)`;
+          name.appendChild(titleSpan);
+
+          if (Array.isArray(item.subitems) && item.subitems.length > 0) {
+            const subList = document.createElement("ul");
+            subList.className = "combo-summary-subitems";
+            item.subitems.forEach((label) => {
+              const li = document.createElement("li");
+              li.textContent = label;
+              subList.appendChild(li);
+            });
+            name.appendChild(subList);
+          }
+
+          const totals = getItemLineTotals(item);
+          const priceLine = document.createElement("div");
+          priceLine.className = "combo-summary-price-line";
+
+          const cutSpan = document.createElement("span");
+          cutSpan.className = "summary-cut-price";
+          cutSpan.textContent = `${formatRupees(totals.originalLineTotal)}/-`;
+
+          const discSpan = document.createElement("span");
+          discSpan.className = "summary-combo-price";
+          discSpan.textContent = `${formatRupees(totals.discountedLineTotal)}/-`;
+
+          priceLine.append(cutSpan, discSpan);
+          name.appendChild(priceLine);
+        } else {
+          name.textContent = item.product.name;
+        }
+
+        const sizeLabel = document.createElement("label");
+        sizeLabel.className = "order-field";
+        sizeLabel.append("Pack size");
+
+        if (item.type === "combo") {
+          const fixedPack = document.createElement("div");
+          fixedPack.className = "order-fixed-pack";
+          fixedPack.textContent = "Combo Box";
+          sizeLabel.appendChild(fixedPack);
+        } else {
+          const sizeSelect = document.createElement("select");
+          [["250", "250g"], ["500", "500g"], ["1000", "1kg"]].forEach(([size, label]) => {
+            const option = document.createElement("option");
+            option.value = size;
+            option.textContent = `${label} — ${formatRupees(item.product.prices[size])}/-`;
+            sizeSelect.appendChild(option);
+          });
+
+          sizeSelect.value = item.packSize;
+          sizeSelect.addEventListener("change", () => {
+            item.packSize = sizeSelect.value;
+            saveCartToStorage();
+            updateTotal();
+          });
+          sizeLabel.appendChild(sizeSelect);
+        }
+
+        const quantityLabel = document.createElement("label");
+        quantityLabel.className = "order-field";
+        quantityLabel.append("Quantity");
+
+        const quantityInput = document.createElement("input");
+        quantityInput.type = "number";
+        quantityInput.min = "1";
+        quantityInput.step = "1";
+        quantityInput.value = item.quantity;
+        quantityInput.setAttribute(
+          "aria-label",
+          item.type === "combo" ? `${item.title} quantity` : `${item.product.name} quantity`
+        );
+        quantityInput.addEventListener("input", () => {
+          item.quantity = Math.max(1, Number.parseInt(quantityInput.value, 10) || 1);
+          quantityInput.value = item.quantity;
+          if (item.type === "combo") {
+            const totals = getItemLineTotals(item);
+            const cutEl = row.querySelector(".summary-cut-price");
+            const discEl = row.querySelector(".summary-combo-price");
+            if (cutEl) cutEl.textContent = `${formatRupees(totals.originalLineTotal)}/-`;
+            if (discEl) discEl.textContent = `${formatRupees(totals.discountedLineTotal)}/-`;
+          }
+          saveCartToStorage();
+          updateTotal();
+        });
+        quantityLabel.appendChild(quantityInput);
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "remove-item";
+        remove.textContent = "Remove";
+        remove.addEventListener("click", () => {
+          selectedItems.delete(id);
+          if (item.type === "product") {
+            const card = document.querySelector(`[data-product-id="${CSS.escape(id)}"]`);
+            if (card) card.classList.remove("is-selected");
+          }
+          saveCartToStorage();
+          renderOrderItems();
+        });
+
+        row.append(name, sizeLabel, quantityLabel, remove);
+        orderItems.appendChild(row);
+      });
+
+      updateTotal();
+    }
+
+    clearOrderBtn.addEventListener("click", () => {
+      selectedItems.clear();
+      document.querySelectorAll(".snack-card.is-selected").forEach((card) => {
+        card.classList.remove("is-selected");
+      });
+      saveCartToStorage();
+      renderOrderItems();
+    });
+
+    customerNameInput.addEventListener("input", saveCustomerToStorage);
+    houseDetailsInput.addEventListener("input", saveCustomerToStorage);
+    deliveryOptionSelect.addEventListener("change", saveCustomerToStorage);
+
+    function showCopyToast(message = "📋 Menu link copied!") {
+      copyToast.textContent = message;
+      copyToast.classList.add("show");
+      if (copyToastTimer) clearTimeout(copyToastTimer);
+      copyToastTimer = setTimeout(() => {
+        copyToast.classList.remove("show");
+      }, 2400);
+    }
+
+    async function copyTextToClipboard(text, toastMessage) {
+      try {
+        await navigator.clipboard.writeText(text);
+        showCopyToast(toastMessage);
+      } catch {
+        const tempArea = document.createElement("textarea");
+        tempArea.value = text;
+        document.body.appendChild(tempArea);
+        tempArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempArea);
+        showCopyToast(toastMessage);
+      }
+    }
+
+    document.querySelectorAll("[data-copy-link]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        copyTextToClipboard(window.location.href, "📋 Menu link copied!");
+      });
+    });
+
+    function showBabyCravingPopup(productName) {
+      babyCravingItemName.textContent = productName;
+      babyCravingPopup.classList.add("show");
+      babyCravingPopup.setAttribute("aria-hidden", "false");
+
+      if (cravingPopupTimer) clearTimeout(cravingPopupTimer);
+      cravingPopupTimer = setTimeout(() => {
+        babyCravingPopup.classList.remove("show");
+        babyCravingPopup.setAttribute("aria-hidden", "true");
+      }, 3200);
+    }
+
+    function showCelebration(productName) {
+      showBabyCravingPopup(productName);
+
+      celebrationProduct.textContent = productName;
+      celebrationModal.classList.add("show");
+      celebrationModal.setAttribute("aria-hidden", "false");
+
+      const card = celebrationModal.querySelector(".celebration-card");
+      card.querySelectorAll(".celebration-confetti").forEach((piece) => piece.remove());
+
+      ["🎉", "✨", "🎊", "⭐", "💛", "🥳"].forEach((symbol, index) => {
+        const piece = document.createElement("span");
+        piece.className = "celebration-confetti";
+        piece.textContent = symbol;
+        piece.style.left = `${8 + index * 16}%`;
+        piece.style.animationDelay = `${index * 0.08}s`;
+        piece.style.fontSize = `${1.2 + (index % 3) * 0.35}rem`;
+        card.appendChild(piece);
+      });
+
+      continueShoppingBtn.focus();
+    }
+
+    function closeCelebration() {
+      celebrationModal.classList.remove("show");
+      celebrationModal.setAttribute("aria-hidden", "true");
+      if (lastSelectedCard) {
+        const openBtn = lastSelectedCard.querySelector(".snack-option");
+        if (openBtn) openBtn.focus();
+      }
+    }
+
+    function setupShareLinks() {
+      const pageUrl = window.location.href;
+      const shareText = `Check out *Hometown Treats* — delicious homemade traditional snacks & sweets! 🏠✨\n\nBrowse the full menu and order directly here:\n${pageUrl}`;
+      const shareUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+
+      const ctaShare = document.getElementById("shareMenuCtaBtn");
+      if (ctaShare) ctaShare.href = shareUrl;
+    }
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function runDialogueSequence() {
+      if (prefersReducedMotion) {
+        babyBubble.classList.add("is-visible");
+        window.setTimeout(() => {
+          babyBubble.classList.remove("is-visible");
+          momBubble.classList.add("is-visible");
+          snackScene.classList.add("mom-replied");
+        }, 2200);
+        return;
+      }
+
+      window.setTimeout(() => {
+        babyBubble.classList.add("is-visible");
+      }, 1700);
+
+      window.setTimeout(() => {
+        babyBubble.classList.remove("is-visible");
+        window.setTimeout(() => {
+          momBubble.classList.add("is-visible");
+          snackScene.classList.add("mom-replied");
+        }, 400);
+      }, 4500);
+    }
+
+    babyRunner.addEventListener("animationend", () => {
+      babyBubble.classList.add("is-visible");
+    }, { once: true });
+
+    runDialogueSequence();
+
+    function updateScrollTopButtonVisibility() {
+      const menuVisible = !pageContent.hidden;
+      scrollTopBtn.classList.toggle("show", menuVisible && window.scrollY > 220);
+      if (menuVisible && window.scrollY > introStage.offsetHeight * 0.65) {
+        document.body.classList.add("menu-opened");
+      } else if (window.scrollY <= 80) {
+        document.body.classList.remove("menu-opened");
+      }
+    }
+
+    window.addEventListener("scroll", updateScrollTopButtonVisibility, { passive: true });
+
+    scrollTopBtn.addEventListener("click", () => {
+      document.body.classList.remove("menu-opened");
+      introStage.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "start"
+      });
+    });
+
+    document.getElementById("viewItemsButton").addEventListener("click", () => {
+      document.body.classList.add("menu-opened");
+      stickyMenuHeader.hidden = false;
+      pageContent.hidden = false;
+      pageFooter.hidden = false;
+
+      stickyMenuHeader.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "start"
+      });
+      updateScrollTopButtonVisibility();
+    });
+
+    menuSearchInput.addEventListener("input", () => {
+      const activePill = categoryPillsBar.querySelector(".category-pill.active");
+      const activeCategory = activePill ? activePill.dataset.filter : "all";
+      filterMenu(menuSearchInput.value, activeCategory);
+    });
+
+    clearSearchBtn.addEventListener("click", () => {
+      menuSearchInput.value = "";
+      const activePill = categoryPillsBar.querySelector(".category-pill.active");
+      const activeCategory = activePill ? activePill.dataset.filter : "all";
+      filterMenu("", activeCategory);
+      menuSearchInput.focus();
+    });
+
+    modalPackSelect.addEventListener("change", updateModalPrice);
+    modalQtySelect.addEventListener("change", updateModalPrice);
+    closeModalBtn.addEventListener("click", closeModal);
+    continueShoppingBtn.addEventListener("click", closeCelebration);
+
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) closeModal();
+    });
+
+    celebrationModal.addEventListener("click", (event) => {
+      if (event.target === celebrationModal) closeCelebration();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && modal.classList.contains("show")) closeModal();
+      else if (event.key === "Escape" && celebrationModal.classList.contains("show")) closeCelebration();
+    });
+
+    addToCartBtn.addEventListener("click", () => {
+      if (!currentProduct || !modalPackSelect.value || !modalQtySelect.value) return;
+
+      const product = currentProduct;
+      const packSize = modalPackSelect.value;
+      const quantity = Number(modalQtySelect.value);
+
+      addProductToCart(product, packSize, quantity, lastSelectedCard);
+      closeModal();
+      showCelebration(product.name);
+    });
+
+    copyOrderSummaryBtn.addEventListener("click", () => {
+      if (!lastFormattedWhatsAppMessage) return;
+      copyTextToClipboard(lastFormattedWhatsAppMessage, "✓ Copied Order Summary!");
+      copyOrderSummaryBtn.textContent = "✓ Copied Order Summary!";
+      setTimeout(() => {
+        copyOrderSummaryBtn.textContent = "📋 Copy Order Summary";
+      }, 2000);
+    });
+
+    document.getElementById("snackOrderForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const customerName = customerNameInput.value.trim();
+      const houseDetails = houseDetailsInput.value.trim();
+      const deliveryOption = deliveryOptionSelect.value;
+
+      if (!customerName || !houseDetails || !deliveryOption) {
+        alert("Please fill in your name, house details, and select a delivery option.");
+        return;
+      }
+
+      if (selectedItems.size === 0) {
+        alert("Please select at least one snack from the menu.");
+        return;
+      }
+
+      saveCustomerToStorage();
+
+      let total = 0;
+      const message = ["*Hello Hometown Treats, I would like to place an order*"];
+
+      selectedItems.forEach((item) => {
+        const totals = getItemLineTotals(item);
+        total += totals.discountedLineTotal;
+
+        if (item.type === "combo") {
+          const itemsDesc = Array.isArray(item.subitems) && item.subitems.length
+            ? ` [${item.subitems.join(", ")}]`
+            : "";
+          message.push(
+            `• *${item.title} (Combo)*${itemsDesc} × ${item.quantity}: ~${formatRupees(totals.originalLineTotal)}/-~ *${formatRupees(totals.discountedLineTotal)}/-*`
+          );
+        } else {
+          message.push(
+            `• *${item.product.name}* — ${getPackLabel(item.packSize)} × ${item.quantity}: *${formatRupees(totals.discountedLineTotal)}/-*`
+          );
+        }
+      });
+
+      message.push(`*Estimated total:* ${formatRupees(total)}/-`);
+      message.push(`*Delivery option:* ${deliveryOption}`);
+      message.push(`*Name:* ${customerName}`);
+      message.push(`*House details:* ${houseDetails}`);
+
+      const note = orderMessageInput.value.trim();
+      if (note) message.push(`*Additional note:* ${note}`);
+
+      const fullMessageText = message.join("\n");
+      lastFormattedWhatsAppMessage = fullMessageText;
+
+      const whatsappUrl =
+        `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(fullMessageText)}`;
+      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+
+      document.getElementById("thankYouName").textContent = customerName;
+      document.getElementById("thankYouHouse").textContent = houseDetails;
+      document.getElementById("thankYouDeliveryMode").textContent = deliveryOption;
+      document.getElementById("thankYouTotal").textContent = `${formatRupees(total)}/-`;
+
+      const summary = document.getElementById("thankYouOrderList");
+      summary.innerHTML = "";
+      selectedItems.forEach((item) => {
+        const totals = getItemLineTotals(item);
+        const li = document.createElement("li");
+        if (item.type === "combo") {
+          const itemsDesc = Array.isArray(item.subitems) && item.subitems.length
+            ? ` (${item.subitems.join(", ")})`
+            : "";
+          li.textContent = `${item.title} (Combo)${itemsDesc} × ${item.quantity} — ${formatRupees(totals.discountedLineTotal)}/-`;
+        } else {
+          li.textContent = `${item.product.name} (${getPackLabel(item.packSize)}) × ${item.quantity} — ${formatRupees(totals.discountedLineTotal)}/-`;
+        }
+        summary.appendChild(li);
+      });
+
+      floatingCartPill.classList.remove("show");
+      scrollTopBtn.classList.remove("show");
+      document.getElementById("thankYouScreen").classList.add("show");
+      window.scrollTo(0, 0);
+    });
+
+    renderCombos();
+    renderMenu();
+    loadSavedState();
+    renderOrderItems();
+    setupShareLinks();
+  </script>
+</body>
+</html>
